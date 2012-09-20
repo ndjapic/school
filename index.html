@@ -1,58 +1,42 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>ÐšÐ²Ð°Ð´Ñ€Ð°Ñ‚Ð½Ð¸ ÐºÐ¾Ñ€ÐµÐ½</title>
-  </head>
-  <body>
+<html><head>
+<meta charset="UTF-8" />
+<title>Уређивач хипертекста</title>
+<style>
+  html, body { height: 98%; }
+  table { width: 100%; height: 100%; }
+  textarea { width: 98%; height: 98%; }
+  h1, h2 { color: red; text-align: center; }
+  p {
+    text-indent: 2em;
+    text-align: justify;
+    margin: auto;
+  }
+  td {
+    vertical-align: top; 
+    overflow: auto;
+  }
+</style>
+</head><body>
 
-    <h1>ÐšÐ²Ð°Ð´Ñ€Ð°Ñ‚Ð½Ð¸ ÐºÐ¾Ñ€ÐµÐ½</h1>
+<table>
+  <tbody>
+    <tr>
+      <td><textarea onkeyup="document.querySelector('#right').innerHTML = this.value">
+&lt;h1&gt;Структура документа&lt;/h1&gt;
 
-    <p>ÐŠÑƒÑ‚Ð½Ð¾Ð² Ð¿Ð¾ÑÑ‚ÑƒÐ¿Ð°Ðº Ð·Ð° Ð¸Ð·Ñ€Ð°Ñ‡ÑƒÐ½Ð°Ð²Ð°ÑšÐµ ÐºÐ²Ð°Ð´Ñ€Ð°Ñ‚Ð½Ð¾Ð³ ÐºÐ¾Ñ€ÐµÐ½Ð° Ñ˜Ðµ
-    ÑƒÐ¾Ð±Ð¸Ñ‡Ð°Ñ˜ÐµÐ½Ð¸ Ð¿Ð¾ÑÑ‚ÑƒÐ¿Ð°Ðº ÐºÐ¾Ñ˜Ð¸ ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð¸ ÑÐ²Ð°ÐºÐ¸ ÐºÐ°Ð»ÐºÑƒÐ»Ð°Ñ‚Ð¾Ñ€
-    Ð·Ð±Ð¾Ð³ ÐµÑ„Ð¸ÐºÐ°ÑÐ½Ð¾ÑÑ‚Ð¸ Ñ‚Ð¾Ð³ Ð¿Ð¾ÑÑ‚ÑƒÐ¿ÐºÐ°.</p>
+&lt;p&gt;Ово је први пасус у документу. Приметите да сви пасуси имају први ред одмакнут од леве маргине.
+Остали редови нису одмакнути.
+То је постигнуто изменама параметара стила у оквиру заглавља овог документа.
+Детаљније се може сазнати увидом у изворни код документа десним кликом на документ.&lt;/p&gt;
 
-  <form name="main" onsubmit="return update(this)">
-    <p>a = <input name="a" value="2" /> <input type="submit"></p>
-    <table border="2">
-      <tr> <th>Ð±Ñ€</th> <th>x</th> <th>y = a/x</th> <th>Ð¿Ñ€Ð¾ÑÐµÐº</th> </tr>
-      <tr id="tr"><td align="right">.</td><td>.</td><td>.</td><td>.</td></tr>
-    </table>
-    <p>ÐŸÑ€Ð¾Ð²ÐµÑ€Ð°: <output name="r"></output></p>
-  </form>
+&lt;p&gt; Други пасус. Овако се пишу неједнакости: &lt;/p&gt;
 
-  </body>
-  <script>
-//    document.normalize()
-    var tr = document.getElementById('tr')
-    tr.removeAttribute('id')
+        &lt;center&gt; a &amp;lt; b и x &amp;gt; y &lt;/center&gt;
+</textarea></td>
+      <td style="height: 100%; width: 50%;" id="right" />
+    </tr>
+  </tbody>
+</table>
 
-    function sqrt(a) {
-      function iterate(x) {
-        var y = a / x
-        var p = (x + y) / 2
-        var cl = tr.cloneNode(true)
-        var td = tr.firstChild
-        td.firstChild.data = ++i + '.'
-        td = td.nextSibling
-        td.firstChild.data = x
-        td = td.nextSibling
-        td.firstChild.data = y
-        td = td.nextSibling
-        td.firstChild.data = p
-        tr.parentNode.appendChild(cl)
-        tr = cl
-        return Math.abs(x / y - 1) < 1e-13 || i > 99 ? p : iterate(p)
-      }
-      var i = 0
-      return iterate(a)
-    }
-
-    function update(frm) {
-      var x = sqrt(Number(frm.a.value))
-      frm.r.value = x + ' Ð½Ð° ÐºÐ²Ð°Ð´Ñ€Ð°Ñ‚ Ñ˜Ðµ ' + x*x
-      return false
-    }
-  </script>
-
-</html>
+</body></html>
