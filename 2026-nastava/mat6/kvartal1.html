@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Припрема за 1. писмени задатак - Математика 6. разред</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for rendering Mathematical LaTeX symbols -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .math-content { font-size: 1.1rem; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-indigo-700 text-white shadow-lg py-6 px-4 mb-6">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <span class="bg-indigo-500 text-indigo-100 text-xs font-semibold uppercase px-2.5 py-1 rounded-full">
+                    6. разред &bull; Први квартал
+                </span>
+                <h1 class="text-2xl md:text-3xl font-bold mt-2">Квиз за припрему 1. писменог задатка</h1>
+                <p class="text-indigo-200 text-sm mt-1">Реши задатке у свесци, па изабери тачан одговор за савет и проверу.</p>
+            </div>
+            <div class="text-right text-xs text-indigo-200 hidden md:block">
+                <p class="font-medium text-white">Наставни материјал</p>
+                <p>Пројекат: <code class="bg-indigo-800 px-1.5 py-0.5 rounded">school/2026-nastava</code></p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-3xl mx-auto px-4 w-full flex-grow">
+        
+        <!-- Quiz Main Card -->
+        <div id="quiz-card" class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8 transition-all">
+            
+            <!-- Progress & Header Bar -->
+            <div class="mb-6 border-b border-slate-100 pb-4">
+                <div class="flex justify-between items-center text-sm font-semibold text-slate-500 mb-2">
+                    <span id="question-number-badge" class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs">
+                        Питање 1 од 12
+                    </span>
+                    <span id="progress-percent" class="text-slate-600">0% Комплетирано</span>
+                </div>
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 8.33%;"></div>
+                </div>
+            </div>
+
+            <!-- Question Text -->
+            <div class="mb-6">
+                <h2 id="question-text" class="text-lg md:text-xl font-semibold text-slate-800 leading-relaxed math-content">
+                    <!-- Dynamic Question content -->
+                </h2>
+            </div>
+
+            <!-- Answer Options -->
+            <div id="options-container" class="space-y-3 mb-6">
+                <!-- Dynamic Options rendered here -->
+            </div>
+
+            <!-- Actions Bar -->
+            <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                <button id="check-btn" onclick="checkAnswer()" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium py-2.5 px-6 rounded-xl transition duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    Провери одговор
+                </button>
+            </div>
+
+            <!-- Detailed Solution / Feedback Block -->
+            <div id="feedback-block" class="hidden mt-6 p-5 rounded-xl border transition-all">
+                <div class="flex items-center gap-2 font-bold text-lg mb-2" id="feedback-status">
+                    <!-- Success/Error Header -->
+                </div>
+                
+                <!-- Detailed Explanation -->
+                <div class="mt-3 text-slate-700 text-sm leading-relaxed border-t border-slate-200/60 pt-3">
+                    <p class="font-semibold text-slate-900 mb-1">Поступак и објашњење:</p>
+                    <div id="solution-text" class="math-content text-slate-800 bg-white p-3 rounded-lg border border-slate-200">
+                        <!-- Solution detail -->
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-end">
+                    <button id="next-btn" onclick="nextQuestion()" class="bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium py-2 px-5 rounded-lg transition duration-200 shadow-sm">
+                        Следеће питање &rarr;
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Final Results Card (Initially Hidden) -->
+        <div id="results-card" class="hidden bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8 text-center">
+            <div class="inline-flex p-4 rounded-full bg-indigo-50 text-indigo-600 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Квиз је завршен!</h2>
+            <p class="text-slate-600 mb-6">Овде су твоји резултати за припрему 1. писменог задатка:</p>
+
+            <div class="bg-slate-50 rounded-xl p-6 mb-6 max-w-sm mx-auto border border-slate-100">
+                <div id="final-score" class="text-4xl font-extrabold text-indigo-600 mb-1">0 / 12</div>
+                <div id="final-percentage" class="text-lg font-medium text-slate-500 mb-2">0% Успешност</div>
+                <div id="grade-badge" class="inline-block px-4 py-1.5 rounded-full text-sm font-semibold mt-2">
+                    <!-- Grade string -->
+                </div>
+            </div>
+
+            <p id="motivational-message" class="text-slate-700 italic mb-8 max-w-md mx-auto">
+                <!-- Dynamic text message -->
+            </p>
+
+            <!-- Detailed breakdown list -->
+            <div class="text-left mb-8">
+                <h3 class="font-bold text-slate-800 mb-3 text-sm uppercase tracking-wider">Преглед одговора по питањима:</h3>
+                <div id="answers-breakdown" class="space-y-2 text-sm">
+                    <!-- Dynamic details -->
+                </div>
+            </div>
+
+            <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-xl transition duration-200 shadow-sm">
+                Поново покрени квиз
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 py-6 bg-slate-100 border-t border-slate-200 text-center text-xs text-slate-500">
+        <p>Математика за 6. разред &bull; Припрема за 1. писмени задатак</p>
+        <p class="mt-1">Сва права задржана &copy; 2026. GitHub Classroom / ndjapic</p>
+    </footer>
+
+    <!-- Quiz Logic Script -->
+    <script>
+        // Array of 12 questions matching Serbian 6th grade curriculum for Quarter 1
+        const quizData = [
+            {
+                question: "1. Одреди супротан број броја $a = -(-12)$.",
+                options: [
+                    "А) $-12$",
+                    "Б) $12$",
+                    "В) $0$",
+                    "Г) $-\\frac{1}{12}$"
+                ],
+                correct: 0,
+                solution: "Прво поједноставимо израз за број $a$: $a = -(-12) = 12$. Супротан број било ког броја $x$ је $-x$. Према томе, супротан број броја $12$ је $-12$."
+            },
+            {
+                question: "2. Израчунај вредност бројевног израза: $|-18| - |-7| + |+5|$.",
+                options: [
+                    "А) $16$",
+                    "Б) $6$",
+                    "В) $-20$",
+                    "Г) $30$"
+                ],
+                correct: 0,
+                solution: "Апсолутна вредност сваког броја је ненагативна: $|-18| = 18$, $|-7| = 7$, и $|+5| = 5$. Уврштавањем добијамо: $18 - 7 + 5 = 11 + 5 = 16$."
+            },
+            {
+                question: "3. Који од понуђених низова приказује бројеве $-12, +5, 0, -8, -15, +3$ поређане од најмањег до највећег?",
+                options: [
+                    "А) $-15, -12, -8, 0, +3, +5$",
+                    "Б) $-8, -12, -15, 0, +3, +5$",
+                    "В) $+5, +3, 0, -8, -12, -15$",
+                    "Г) $-12, -15, -8, 0, +3, +5$"
+                ],
+                correct: 0,
+                solution: "Негативни бројеви су мањи од нуле и свих позитивних бројева. Међу негативним бројевима мањи је онај који је даљи од нуле (има већу апсолутну вредност): $-15 < -12 < -8 < 0 < +3 < +5$."
+            },
+            {
+                question: "4. Израчунај вредност израза: $-15 - (-23) + (-12)$.",
+                options: [
+                    "А) $-4$",
+                    "Б) $-50$",
+                    "В) $20$",
+                    "Г) $4$"
+                ],
+                correct: 0,
+                solution: "Ослободимо се заграда: $-15 - (-23) + (-12) = -15 + 23 - 12$. Сабирамо редом слева надесно: $-15 + 23 = 8$, па затим $8 - 12 = -4$."
+            },
+            {
+                question: "5. Колико износи растојање између тачака $A(-8)$ и $B(+7)$ на бројевној правој?",
+                options: [
+                    "А) $15$",
+                    "Б) $1$",
+                    "В) $-1$",
+                    "Г) $13$"
+                ],
+                correct: 0,
+                solution: "Растојање између две тачке $A(a)$ и $B(b)$ рачуна се по формули $d(A,B) = |b - a|$. Дакле, $d(A,B) = |+7 - (-8)| = |7 + 8| = |15| = 15$ јединица."
+            },
+            {
+                question: "6. Израчунај вредност израза: $(-6) \\cdot (-4) : (-3)$.",
+                options: [
+                    "А) $-8$",
+                    "Б) $8$",
+                    "В) $-72$",
+                    "Г) $72$"
+                ],
+                correct: 0,
+                solution: "Прво множимо слева надесно: $(-6) \\cdot (-4) = +24$ (производ два негативна броја је позитиван). Затим делимо: $24 : (-3) = -8$ (количник позитивног и негативног броја је негативан)."
+            },
+            {
+                question: "7. Израчунај вредност бројевног израза: $-12 + 4 \\cdot (-5 - (-8))$.",
+                options: [
+                    "А) $0$",
+                    "Б) $-24$",
+                    "В) $-64$",
+                    "Г) $12$"
+                ],
+                correct: 0,
+                solution: "Прво израчунавамо заграду: $-5 - (-8) = -5 + 8 = 3$. Затим вршимо множење: $4 \\cdot 3 = 12$. На крају сабирамо: $-12 + 12 = 0$."
+            },
+            {
+                question: "8. Ако су унутрашњи углови троугла $\\alpha = 45^\\circ$ и $\\beta = 68^\\circ$, колика је мера трећег унутрашњег угла $\\gamma$?",
+                options: [
+                    "А) $67^\\circ$",
+                    "Б) $77^\\circ$",
+                    "В) $57^\\circ$",
+                    "Г) $113^\\circ$"
+                ],
+                correct: 0,
+                solution: "Збир унутрашњих углова сваког троугла је $180^\\circ$. Дакле: $\\gamma = 180^\\circ - (\\alpha + \\beta) = 180^\\circ - (45^\\circ + 68^\\circ) = 180^\\circ - 113^\\circ = 67^\\circ$."
+            },
+            {
+                question: "9. Спољашњи угао троугла код темена $A$ је $\\alpha_1 = 110^\\circ$, а унутрашњи угао код темена $B$ је $\\beta = 50^\\circ$. Одреди унутрашњи угао $\\gamma$ код темена $C$.",
+                options: [
+                    "А) $60^\\circ$",
+                    "Б) $70^\\circ$",
+                    "В) $120^\\circ$",
+                    "Г) $40^\\circ$"
+                ],
+                correct: 0,
+                solution: "Спољашњи угао је једнак збиру два њима несуседна унутрашња угла: $\\alpha_1 = \\beta + \\gamma$. Отуда је $110^\\circ = 50^\\circ + \\gamma \\implies \\gamma = 110^\\circ - 50^\\circ = 60^\\circ$."
+            },
+            {
+                question: "10. Паралелне праве $a$ и $b$ пресечене су трансверзалом $t$. Ако је један оштар угао $55^\\circ$, колико износи њима одговарајући суплементни туп угао?",
+                options: [
+                    "А) $125^\\circ$",
+                    "Б) $55^\\circ$",
+                    "В) $35^\\circ$",
+                    "Г) $135^\\circ$"
+                ],
+                correct: 0,
+                solution: "Углови на трансверзали су или једнаки или суплементни (збир им је $180^\\circ$). Сваки оштар и туп угао на трансверзали чине напоредне/суплементне углове: $180^\\circ - 55^\\circ = 125^\\circ$."
+            },
+            {
+                question: "11. У троуглу $ABC$ углови су $\\alpha = 70^\\circ$ и $\\beta = 50^\\circ$. Поређај странице $a, b, c$ од најкраће до најдуже.",
+                options: [
+                    "А) $b < c < a$",
+                    "Б) $a < b < c$",
+                    "В) $c < b < a$",
+                    "Г) $a < c < b$"
+                ],
+                correct: 0,
+                solution: "Прво нађемо трећи угао: $\\gamma = 180^\\circ - (70^\\circ + 50^\\circ) = 60^\\circ$. Упоредимо углове: $\\beta(50^\\circ) < \\gamma(60^\\circ) < \\alpha(70^\\circ)$. Према теореми о односу страница и углова, наспрам мањег угла лежи краћа страница: $b < c < a$."
+            },
+            {
+                question: "12. Која од следећих тројки дужина МОЖЕ представљати дужине страница једног троугла?",
+                options: [
+                    "А) $4\\text{ cm}, 6\\text{ cm}, 8\\text{ cm}$",
+                    "Б) $3\\text{ cm}, 5\\text{ cm}, 9\\text{ cm}$",
+                    "В) $2\\text{ cm}, 7\\text{ cm}, 9\\text{ cm}$",
+                    "Г) $1\\text{ cm}, 2\\text{ cm}, 4\\text{ cm}$"
+                ],
+                correct: 0,
+                solution: "Према неједнакости троугла, збир дужина било које две странице мора бити строга већи од треће странице ($a + b > c$). Довољно је да проверимо збир две краће странице: $4 + 6 = 10 > 8$ (Тачно!). У осталим опцијама збир је мањи или једнак трећој ($3+5 < 9$, $2+7 = 9$, $1+2 < 4$)."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let selectedOption = null;
+        let score = 0;
+        let userAnswers = [];
+
+        // DOM Elements
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainerEl = document.getElementById('options-container');
+        const checkBtn = document.getElementById('check-btn');
+        const feedbackBlock = document.getElementById('feedback-block');
+        const feedbackStatus = document.getElementById('feedback-status');
+        const solutionTextEl = document.getElementById('solution-text');
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercent = document.getElementById('progress-percent');
+        const questionBadge = document.getElementById('question-number-badge');
+        const quizCard = document.getElementById('quiz-card');
+        const resultsCard = document.getElementById('results-card');
+
+        // Initialize quiz on page load
+        window.onload = function() {
+            renderQuestion();
+        };
+
+        function renderQuestion() {
+            selectedOption = null;
+            feedbackBlock.classList.add('hidden');
+            checkBtn.disabled = true;
+
+            const q = quizData[currentQuestion];
+            questionTextEl.innerHTML = q.question;
+
+            // Render Options
+            optionsContainerEl.innerHTML = '';
+            q.options.forEach((opt, index) => {
+                const optBtn = document.createElement('button');
+                optBtn.className = `w-full text-left p-4 rounded-xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 transition duration-150 flex items-center justify-between math-content option-btn-${index}`;
+                optBtn.onclick = () => selectOption(index);
+                optBtn.innerHTML = `<span>${opt}</span><span class="w-5 h-5 border border-slate-300 rounded-full flex items-center justify-center text-xs check-icon"></span>`;
+                optionsContainerEl.appendChild(optBtn);
+            });
+
+            // Update Progress Bar
+            const percent = Math.round(((currentQuestion + 1) / quizData.length) * 100);
+            progressBar.style.width = `${percent}%`;
+            progressPercent.textContent = `${percent}% Комплетирано`;
+            questionBadge.textContent = `Питање ${currentQuestion + 1} од ${quizData.length}`;
+
+            // Trigger MathJax re-render for new HTML content
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function selectOption(index) {
+            selectedOption = index;
+            checkBtn.disabled = false;
+
+            // Update visuals for selected option
+            const buttons = optionsContainerEl.querySelectorAll('button');
+            buttons.forEach((btn, idx) => {
+                const icon = btn.querySelector('.check-icon');
+                if (idx === index) {
+                    btn.className = 'w-full text-left p-4 rounded-xl border-2 border-indigo-600 bg-indigo-50/80 text-indigo-950 font-medium transition duration-150 flex items-center justify-between math-content';
+                    icon.className = 'w-5 h-5 bg-indigo-600 border border-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold';
+                    icon.innerHTML = '&#10003;';
+                } else {
+                    btn.className = 'w-full text-left p-4 rounded-xl border border-slate-200 hover:border-indigo-300 hover:bg-slate-50 transition duration-150 flex items-center justify-between math-content';
+                    icon.className = 'w-5 h-5 border border-slate-300 rounded-full flex items-center justify-center text-xs';
+                    icon.innerHTML = '';
+                }
+            });
+        }
+
+        function checkAnswer() {
+            if (selectedOption === null) return;
+
+            const q = quizData[currentQuestion];
+            const isCorrect = selectedOption === q.correct;
+
+            userAnswers.push({
+                question: q.question,
+                selected: selectedOption,
+                correct: q.correct,
+                isCorrect: isCorrect
+            });
+
+            if (isCorrect) score++;
+
+            // Lock option selection
+            const buttons = optionsContainerEl.querySelectorAll('button');
+            buttons.forEach((btn, idx) => {
+                btn.onclick = null;
+                btn.classList.add('cursor-default');
+                if (idx === q.correct) {
+                    btn.classList.remove('border-slate-200', 'bg-indigo-50/80');
+                    btn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-900');
+                } else if (idx === selectedOption && !isCorrect) {
+                    btn.classList.remove('border-indigo-600', 'bg-indigo-50/80');
+                    btn.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-900');
+                }
+            });
+
+            // Show Feedback
+            feedbackBlock.classList.remove('hidden');
+            if (isCorrect) {
+                feedbackBlock.className = 'mt-6 p-5 rounded-xl border bg-emerald-50/60 border-emerald-200 text-emerald-900';
+                feedbackStatus.innerHTML = `<span class="text-emerald-600">&#10004;</span> Тачан одговор!`;
+            } else {
+                feedbackBlock.className = 'mt-6 p-5 rounded-xl border bg-rose-50/60 border-rose-200 text-rose-900';
+                feedbackStatus.innerHTML = `<span class="text-rose-600">&#10008;</span> Нетачан одговор!`;
+            }
+
+            solutionTextEl.innerHTML = q.solution;
+            checkBtn.disabled = true;
+
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizCard.classList.add('hidden');
+            resultsCard.classList.remove('hidden');
+
+            const total = quizData.length;
+            const percentage = Math.round((score / total) * 100);
+
+            document.getElementById('final-score').textContent = `${score} / ${total}`;
+            document.getElementById('final-percentage').textContent = `${percentage}% Успешност`;
+
+            const gradeBadge = document.getElementById('grade-badge');
+            const messageEl = document.getElementById('motivational-message');
+
+            if (percentage >= 90) {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-emerald-100 text-emerald-800";
+                gradeBadge.textContent = "Оцена: Одличан (5)";
+                messageEl.textContent = "Спреман си за највишу оцену! Све области целих бројева и геометрије троугла владаш одлично.";
+            } else if (percentage >= 75) {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-blue-100 text-blue-800";
+                gradeBadge.textContent = "Оцена: Врло добар (4)";
+                messageEl.textContent = "Врло добро знање! Прегледај ситне грешке у поступцима да обезбедиш чисту петицу.";
+            } else if (percentage >= 60) {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-amber-100 text-amber-800";
+                gradeBadge.textContent = "Оцена: Добар (3)";
+                messageEl.textContent = "Добро рађено, али има простора за напредак. Провери правила рачунања са негативним бројевима.";
+            } else if (percentage >= 50) {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-orange-100 text-orange-800";
+                gradeBadge.textContent = "Оцена: Довољан (2)";
+                messageEl.textContent = "Прешао си праг, али је потребно још вежбања пре самог писменог задатка.";
+            } else {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-rose-100 text-rose-800";
+                gradeBadge.textContent = "Оцена: Недовољан (1)";
+                messageEl.textContent = "Препоручује се да поново прођеш кроз све поступке и вежбаш рачунске операције у свесци.";
+            }
+
+            // Render breakdown
+            const breakdownContainer = document.getElementById('answers-breakdown');
+            breakdownContainer.innerHTML = '';
+            userAnswers.forEach((ans, i) => {
+                const item = document.createElement('div');
+                item.className = `p-3 rounded-lg border flex justify-between items-center ${ans.isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'}`;
+                item.innerHTML = `
+                    <div class="math-content">
+                        <span class="font-bold">${i + 1}.</span> ${ans.question.substring(3)}
+                    </div>
+                    <span class="font-bold ${ans.isCorrect ? 'text-emerald-600' : 'text-rose-600'}">
+                        ${ans.isCorrect ? 'Тачно' : 'Нетачно'}
+                    </span>
+                `;
+                breakdownContainer.appendChild(item);
+            });
+
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            resultsCard.classList.add('hidden');
+            quizCard.classList.remove('hidden');
+            renderQuestion();
+        }
+    </script>
+</body>
+</html>
