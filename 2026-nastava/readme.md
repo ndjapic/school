@@ -34,11 +34,13 @@
 ### Тачка, права и раван
 
 | [Фотографије][831]
-| [2025][832]
+| [Квиз][832]
+| [2025][833]
 |
 
 [831]: https://photos.app.goo.gl/Z2sBAtm4FAZxLg9F6 "Фотографије табле"
-[832]: https://github.com/ndjapic/2025-nastava/tree/main/mat8/03-stereometrija "Страница од 2025"
+[832]: https://ndjapic.github.io/school/2026-nastava/mat8/pismeni1/kviz.html "Квиз из градива у првом кварталу"
+[833]: https://github.com/ndjapic/2025-nastava/tree/main/mat8/03-stereometrija "Страница од 2025"
 
 
 
