@@ -13,9 +13,11 @@
 ### Троугао 1 / 2
 
 | [Фотографије][631]
+| [Квиз][632]
 |
 
 [631]: https://photos.app.goo.gl/qQnjeTgM4hU8GssC6 "Фотографије табле"
+[632]: https://ndjapic.github.io/school/2026-nastava/mat6/kvartal1.html "Квиз из градива у првом кварталу"
 
 ## Математика 8
 
