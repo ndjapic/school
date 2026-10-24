@@ -6,7 +6,7 @@
     <title>Припрема за 1. писмени задатак - Математика 6. разред</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- MathJax Configuration for strictly inline math -->
+    <!-- MathJax Configuration -->
     <script>
         window.MathJax = {
             tex: {
@@ -28,19 +28,37 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* Force MathJax elements to strictly render inline without breaking layout */
-        mjx-container {
-            display: inline !important;
-            margin: 0 2px !important;
+        /* Strict MathJax Baseline & Alignment CSS Rules */
+        mjx-container[display="false"],
+        mjx-container[jax="SVG"][display="false"],
+        mjx-container[jax="CHTML"][display="false"] {
+            display: inline-block !important;
+            margin: 0 0.18em !important;
             padding: 0 !important;
+            vertical-align: -0.18em !important;
+            line-height: normal !important;
         }
+
+        /* Prevent SVG scaling shifts inside text lines */
         mjx-container svg {
-            display: inline !important;
-            vertical-align: -0.2ex !important;
+            display: inline-block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
         }
+
+        /* Line height control for text containing fractions and exponents */
         .math-content {
             font-size: 1.05rem;
-            line-height: 1.7;
+            line-height: 1.85;
+        }
+
+        /* Flex wrap-friendly container for option items */
+        .option-content {
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.25rem;
         }
     </style>
 </head>
@@ -54,11 +72,11 @@
                     6. разред &bull; Први квартал
                 </span>
                 <h1 class="text-2xl md:text-3xl font-bold mt-2">Квиз за припрему 1. писменог задатка</h1>
-                <p class="text-indigo-200 text-sm mt-1">Изабери тачан одговор за тренутну проверу и детаљно објашњење.</p>
+                <p class="text-indigo-200 text-sm mt-1">Цели бројеви и геометрија троугла — Интерактивна вежба</p>
             </div>
             <div class="text-right text-xs text-indigo-200 hidden md:block">
                 <p class="font-medium text-white">Наставни материјал</p>
-                <p>Пројекат: <code class="bg-indigo-800 px-1.5 py-0.5 rounded">school/2026-nastava</code></p>
+                <p>Математика 6. разред</p>
             </div>
         </div>
     </header>
@@ -159,7 +177,7 @@
     <!-- Footer -->
     <footer class="mt-12 py-6 bg-slate-100 border-t border-slate-200 text-center text-xs text-slate-500">
         <p>Математика за 6. разред &bull; Припрема за 1. писмени задатак</p>
-        <p class="mt-1">Сва права задржана &copy; 2026. GitHub Classroom / ndjapic</p>
+        <p class="mt-1">Сва права задржана &copy; 2026.</p>
     </footer>
 
     <!-- Quiz Logic Script -->
@@ -313,13 +331,18 @@
             const q = activeQuizData[currentQuestion];
             questionTextEl.innerHTML = q.questionText;
 
-            // Render Options
+            // Render Options with improved baseline flex structure
             optionsContainerEl.innerHTML = '';
             q.options.forEach((opt, index) => {
                 const optBtn = document.createElement('button');
-                optBtn.className = 'option-btn w-full text-left p-4 rounded-xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 cursor-pointer transition duration-150 flex items-center justify-between math-content shadow-xs';
+                optBtn.className = 'option-btn w-full text-left p-4 rounded-xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 cursor-pointer transition duration-150 flex items-center justify-between math-content shadow-xs min-h-[3.5rem]';
                 optBtn.onclick = () => selectOption(index);
-                optBtn.innerHTML = `<span class="pr-3">${opt}</span><span class="indicator-circle w-6 h-6 border-2 border-slate-300 rounded-full flex items-center justify-center shrink-0 text-xs"></span>`;
+                optBtn.innerHTML = `
+                    <div class="option-content pr-3 text-slate-800 font-medium">
+                        ${opt}
+                    </div>
+                    <span class="indicator-circle w-6 h-6 border-2 border-slate-300 rounded-full flex items-center justify-center shrink-0 text-xs"></span>
+                `;
                 optionsContainerEl.appendChild(optBtn);
             });
 
@@ -364,23 +387,23 @@
                 if (idx === index) {
                     if (isCorrect) {
                         // User chose CORRECT option
-                        btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-medium transition duration-200 flex items-center justify-between math-content shadow-sm';
+                        btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-medium transition duration-200 flex items-center justify-between math-content shadow-sm min-h-[3.5rem]';
                         indicator.className = 'indicator-circle w-6 h-6 rounded-full bg-emerald-600 text-white border border-emerald-600 flex items-center justify-center text-xs font-bold shrink-0';
                         indicator.innerHTML = '&#10003;'; // Checkmark
                     } else {
                         // User chose INCORRECT option
-                        btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-950 font-medium transition duration-200 flex items-center justify-between math-content shadow-sm';
+                        btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-950 font-medium transition duration-200 flex items-center justify-between math-content shadow-sm min-h-[3.5rem]';
                         indicator.className = 'indicator-circle w-6 h-6 rounded-full bg-rose-600 text-white border border-rose-600 flex items-center justify-center text-xs font-bold shrink-0';
                         indicator.innerHTML = '&#10007;'; // Cross mark
                     }
                 } else if (idx === q.correct && !isCorrect) {
                     // Show the correct answer soft-highlighted if user picked wrong
-                    btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-400 bg-emerald-50/70 text-emerald-950 font-medium transition duration-200 flex items-center justify-between math-content';
+                    btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-400 bg-emerald-50/70 text-emerald-950 font-medium transition duration-200 flex items-center justify-between math-content min-h-[3.5rem]';
                     indicator.className = 'indicator-circle w-6 h-6 rounded-full border-2 border-emerald-600 text-emerald-700 bg-emerald-100 flex items-center justify-center text-xs font-bold shrink-0';
                     indicator.innerHTML = '&#10003;';
                 } else {
                     // Neutral unselected option
-                    btn.className = 'option-btn w-full text-left p-4 rounded-xl border border-slate-200 text-slate-400 opacity-60 transition duration-200 flex items-center justify-between math-content';
+                    btn.className = 'option-btn w-full text-left p-4 rounded-xl border border-slate-200 text-slate-400 opacity-60 transition duration-200 flex items-center justify-between math-content min-h-[3.5rem]';
                     indicator.className = 'indicator-circle w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center shrink-0';
                     indicator.innerHTML = '';
                 }
