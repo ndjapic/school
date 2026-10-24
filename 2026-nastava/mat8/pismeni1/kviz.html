@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Припрема за 1. писмени задатак - Математика 8. разред</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                enableMenu: false
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Strict MathJax Baseline & Alignment CSS Rules */
+        mjx-container[display="false"],
+        mjx-container[jax="SVG"][display="false"],
+        mjx-container[jax="CHTML"][display="false"] {
+            display: inline-block !important;
+            margin: 0 0.18em !important;
+            padding: 0 !important;
+            vertical-align: -0.18em !important;
+            line-height: normal !important;
+        }
+
+        /* Prevent SVG scaling shifts inside text lines */
+        mjx-container svg {
+            display: inline-block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+        }
+
+        /* Line height control for text containing fractions and exponents */
+        .math-content {
+            font-size: 1.05rem;
+            line-height: 1.85;
+        }
+
+        /* Flex wrap-friendly container for option items */
+        .option-content {
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-teal-800 text-white shadow-lg py-6 px-4 mb-6">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <span class="bg-teal-600 text-teal-100 text-xs font-semibold uppercase px-2.5 py-1 rounded-full">
+                    8. разред &bull; Први квартал
+                </span>
+                <h1 class="text-2xl md:text-3xl font-bold mt-2">Квиз за припрему 1. писменог задатка</h1>
+                <p class="text-teal-200 text-sm mt-1">Сличност троуглова, Талесова теорема, пројекција и полиедри</p>
+            </div>
+            <div class="text-right text-xs text-teal-200 hidden md:block">
+                <p class="font-medium text-white">Наставни материјал</p>
+                <p>Математика 8. разред</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-3xl mx-auto px-4 w-full flex-grow">
+        
+        <!-- Quiz Main Card -->
+        <div id="quiz-card" class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8 transition-all">
+            
+            <!-- Progress & Header Bar -->
+            <div class="mb-6 border-b border-slate-100 pb-4">
+                <div class="flex justify-between items-center text-sm font-semibold text-slate-500 mb-2">
+                    <span id="question-number-badge" class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-xs font-bold">
+                        Питање 1 од 14
+                    </span>
+                    <span id="progress-percent" class="text-slate-600 font-medium">0% Комплетирано</span>
+                </div>
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-teal-600 h-2.5 rounded-full transition-all duration-300" style="width: 7.14%;"></div>
+                </div>
+            </div>
+
+            <!-- Question Text -->
+            <div class="mb-6">
+                <h2 id="question-text" class="text-lg md:text-xl font-semibold text-slate-800 leading-relaxed math-content">
+                    <!-- Dynamic Question content -->
+                </h2>
+            </div>
+
+            <!-- Answer Options -->
+            <div id="options-container" class="space-y-3 mb-6">
+                <!-- Dynamic Options rendered here -->
+            </div>
+
+            <!-- Detailed Solution / Feedback Block -->
+            <div id="feedback-block" class="hidden mt-6 p-5 rounded-xl border transition-all">
+                <div class="flex items-center gap-2 text-lg mb-2" id="feedback-status">
+                    <!-- Success/Error Header -->
+                </div>
+                
+                <!-- Detailed Explanation -->
+                <div class="mt-3 text-slate-700 text-sm leading-relaxed border-t border-slate-200/60 pt-3">
+                    <p class="font-semibold text-slate-900 mb-1">Поступак и објашњење:</p>
+                    <div id="solution-text" class="math-content text-slate-800 bg-white p-3.5 rounded-lg border border-slate-200 shadow-xs">
+                        <!-- Solution detail -->
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-end">
+                    <button id="next-btn" onclick="nextQuestion()" class="bg-teal-700 hover:bg-teal-800 active:bg-teal-900 text-white font-medium py-2.5 px-6 rounded-xl transition duration-200 shadow-sm flex items-center gap-2">
+                        <span>Следеће питање</span>
+                        <span>&rarr;</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Final Results Card (Initially Hidden) -->
+        <div id="results-card" class="hidden bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8 text-center">
+            <div class="inline-flex p-4 rounded-full bg-teal-50 text-teal-700 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Квиз је завршен!</h2>
+            <p class="text-slate-600 mb-6">Твоји резултати за припрему 1. писменог задатка из математике:</p>
+
+            <div class="bg-slate-50 rounded-xl p-6 mb-6 max-w-sm mx-auto border border-slate-100 shadow-xs">
+                <div id="final-score" class="text-4xl font-extrabold text-teal-700 mb-1">0 / 14</div>
+                <div id="final-percentage" class="text-lg font-medium text-slate-500 mb-2">0% Успешност</div>
+                <div id="grade-badge" class="inline-block px-4 py-1.5 rounded-full text-sm font-bold mt-2">
+                    <!-- Grade string -->
+                </div>
+            </div>
+
+            <p id="motivational-message" class="text-slate-700 italic mb-8 max-w-md mx-auto">
+                <!-- Dynamic text message -->
+            </p>
+
+            <!-- Detailed breakdown list -->
+            <div class="text-left mb-8">
+                <h3 class="font-bold text-slate-800 mb-3 text-sm uppercase tracking-wider">Преглед одговора по питањима:</h3>
+                <div id="answers-breakdown" class="space-y-2 text-sm">
+                    <!-- Dynamic details -->
+                </div>
+            </div>
+
+            <button onclick="restartQuiz()" class="bg-teal-700 hover:bg-teal-800 text-white font-semibold py-3 px-8 rounded-xl transition duration-200 shadow-sm">
+                Поново покрени квиз
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 py-6 bg-slate-100 border-t border-slate-200 text-center text-xs text-slate-500">
+        <p>Математика за 8. разред &bull; Припрема за 1. писмени задатак</p>
+        <p class="mt-1">Сва права задржана &copy; 2026.</p>
+    </footer>
+
+    <!-- Quiz Logic Script -->
+    <script>
+        // Raw dataset for Grade 8, First Quarter curriculum
+        const rawQuizData = [
+            {
+                question: "1. Дужи $AB = 12\\text{ cm}$ и $CD = 18\\text{ cm}$ су у размери. Колика је дужина дужи $EF$ ако дужи $AB, CD, EF, GH$ образују пропорцију $\\frac{AB}{CD} = \\frac{EF}{GH}$, а дужина дужи $GH = 15\\text{ cm}$?",
+                rawOptions: ["$10\\text{ cm}$", "$12\\text{ cm}$", "$8\\text{ cm}$", "$22.5\\text{ cm}$"],
+                correctIndex: 0,
+                solution: "Размера дужи $AB$ и $CD$ је $\\frac{AB}{CD} = \\frac{12}{18} = \\frac{2}{3}$. На основу пропорције $\\frac{2}{3} = \\frac{EF}{15}$, унакрсним множењем добијамо: $3 \\cdot EF = 2 \\cdot 15 \\implies 3 \\cdot EF = 30 \\implies EF = 10\\text{ cm}$."
+            },
+            {
+                question: "2. Који од следећих парова дужина дужи $a$ и $b$ представља **несамерљиве дужи**?",
+                rawOptions: [
+                    "$a = 3\\sqrt{2}\\text{ cm}$ и $b = 5\\text{ cm}$",
+                    "$a = 1.2\\text{ cm}$ и $b = 3.6\\text{ cm}$",
+                    "$a = \\frac{3}{4}\\text{ cm}$ и $b = \\frac{5}{2}\\text{ cm}$",
+                    "$a = \\sqrt{16}\\text{ cm}$ и $b = \\sqrt{25}\\text{ cm}$"
+                ],
+                correctIndex: 0,
+                solution: "Две дужи су несамерљиве ако је однос њихових дужина ирационалан број. Размера $\\frac{a}{b} = \\frac{3\\sqrt{2}}{5}$ је ирационалан број, па су дужи $a$ и $b$ несамерљиве. У свим осталим примерима размере су рационални бројеви."
+            },
+            {
+                question: "3. На крацима угла $s$ уочене су тачке $A, B$ на једном и $A', B'$ на другом краку, тако да је $AA' \\parallel BB'$. Ако су дужи $SA = 6\\text{ cm}$, $AB = 4\\text{ cm}$ и $SA' = 9\\text{ cm}$, колико износи дужина дужи $A'B'$?",
+                rawOptions: ["$6\\text{ cm}$", "$8\\text{ cm}$", "$4.5\\text{ cm}$", "$5\\text{ cm}$"],
+                correctIndex: 0,
+                solution: "Према Талесовој теореми важи однос одсечака на крацима угла: $\\frac{SA}{AB} = \\frac{SA'}{A'B'}$. Заменом вредности добијамо: $\\frac{6}{4} = \\frac{9}{A'B'} \\implies 6 \\cdot A'B' = 36 \\implies A'B' = 6\\text{ cm}$."
+            },
+            {
+                question: "4. Троуглови $ABC$ и $A'B'C'$ су слични ($\\triangle ABC \\sim \\triangle A'B'C'$). Ако су унутрашњи углови троугла $ABC$ једнаки $\\alpha = 50^\\circ$ и $\\beta = 70^\\circ$, колико износи угао $\\gamma'$ троугла $A'B'C'$?",
+                rawOptions: ["$60^\\circ$", "$50^\\circ$", "$70^\\circ$", "$120^\\circ$"],
+                correctIndex: 0,
+                solution: "Трећи угао у троуглу $ABC$ је $\\gamma = 180^\\circ - (50^\\circ + 70^\\circ) = 180^\\circ - 120^\\circ = 60^\\circ$. Пошто су слични троуглови подударни у свим одговарајућим угловима, важи $\\gamma' = \\gamma = 60^\\circ$."
+            },
+            {
+                question: "5. Странице троугла $ABC$ су $a = 6\\text{ cm}$, $b = 8\\text{ cm}$ и $c = 10\\text{ cm}$. Ако је обим њему сличног троугла $A'B'C'$ једнак $12\\text{ cm}$, колико износи најкраћа страница $a'$ троугла $A'B'C'$?",
+                rawOptions: ["$3\\text{ cm}$", "$4\\text{ cm}$", "$2.5\\text{ cm}$", "$5\\text{ cm}$"],
+                correctIndex: 0,
+                solution: "Обим троугла $ABC$ је $O = 6 + 8 + 10 = 24\\text{ cm}$. Коефицијент сличности је $k = \\frac{O'}{O} = \\frac{12}{24} = \\frac{1}{2}$. Најкраћа страница сличног троугла $A'B'C'$ одговара најкраћој страници оригиналног троугла ($a = 6\\text{ cm}$): $a' = k \\cdot a = \\frac{1}{2} \\cdot 6 = 3\\text{ cm}$."
+            },
+            {
+                question: "6. Ако је коефицијент сличности два троугла $k = \\frac{3}{5}$, а површина већег троугла $P = 75\\text{ cm}^2$, колика је површина $P'$ мањег троугла?",
+                rawOptions: ["$27\\text{ cm}^2$", "$45\\text{ cm}^2$", "$15\\text{ cm}^2$", "$36\\text{ cm}^2$"],
+                correctIndex: 0,
+                solution: "Размера површина сличних фигура једнака је квадрату коефицијента сличности: $\\frac{P'}{P} = k^2 = \\left(\\frac{3}{5}\\right)^2 = \\frac{9}{25}$. Према томе: $P' = 75 \\cdot \\frac{9}{25} = 3 \\cdot 9 = 27\\text{ cm}^2$."
+            },
+            {
+                question: "7. Хипотенузина висина правоуглог троугла дели хипотенузу на одсечке дужина $p = 4\\text{ cm}$ и $q = 9\\text{ cm}$. Колика је дужина висине $h_c$ која одговара хипотенузи?",
+                rawOptions: ["$6\\text{ cm}$", "$6.5\\text{ cm}$", "$13\\text{ cm}$", "$5\\text{ cm}$"],
+                correctIndex: 0,
+                solution: "Према Еуклидовој теореми за хипотенузину висину важи формула: $h_c^2 = p \\cdot q$. Уврштавањем вредности добијамо: $h_c^2 = 4 \\cdot 9 = 36 \\implies h_c = \\sqrt{36} = 6\\text{ cm}$."
+            },
+            {
+                question: "8. У правоуглом троуглу хипотенуза је $c = 25\\text{ cm}$, а ортогонална пројекција катете $a$ на хипотенузу је $p = 9\\text{ cm}$. Колика је дужина катете $a$?",
+                rawOptions: ["$15\\text{ cm}$", "$12\\text{ cm}$", "$20\\text{ cm}$", "$10\\text{ cm}$"],
+                correctIndex: 0,
+                solution: "Према Еуклидовој теореми за катету важи формула: $a^2 = p \\cdot c$. Заменом вредности добијамо: $a^2 = 9 \\cdot 25 = 225 \\implies a = \\sqrt{225} = 15\\text{ cm}$."
+            },
+            {
+                question: "9. Ако права $p$ и раван $\\alpha$ немају заједничких тачака ($p \\cap \\alpha = \\emptyset$), у каквом се међусобном положају налазе?",
+                rawOptions: [
+                    "Права $p$ је паралелна са равни $\\alpha$ ($p \\parallel \\alpha$)",
+                    "Права $p$ је нормална на раван $\\alpha$",
+                    "Права $p$ продире кроз раван $\\alpha$",
+                    "Права $p$ лежи у равни $\\alpha$"
+                ],
+                correctIndex: 0,
+                solution: "По дефиницији међусобног положаја праве и равни у простору, ако права и раван немају ниједну заједничку тачку, кажемо да је права паралелна са равни ($p \\parallel \\alpha$)."
+            },
+            {
+                question: "10. Које две праве у простору називамо **мимоилазним**?",
+                rawOptions: [
+                    "Праве које се не секу и не припадају истој равни",
+                    "Праве које припадају истој равни и немају заједничких тачака",
+                    "Праве које се секу под правим углом",
+                    "Праве које су свуда једнако удаљене и леже у истој равни"
+                ],
+                correctIndex: 0,
+                solution: "Мимоилазне праве су праве у простору које се не секу и за које не постоји раван која их обе садржи (некомпланарне праве)."
+            },
+            {
+                question: "11. Дужина дужи $AB$ је $10\\text{ cm}$. Ако дуж $AB$ гради са равни $\\alpha$ угао од $60^\\circ$, колика је дужина њене ортогоналне пројекције $A'B'$ на раван $\\alpha$?",
+                rawOptions: ["$5\\text{ cm}$", "$5\\sqrt{3}\\text{ cm}$", "$10\\text{ cm}$", "$2.5\\text{ cm}$"],
+                correctIndex: 0,
+                solution: "Дужина ортогоналне пројекције дужи на раван рачуна се по формули $A'B' = AB \\cdot \\cos \\varphi$, где је $\\varphi$ угао који дуж заклапа са равни. Зато је $A'B' = 10 \\cdot \\cos 60^\\circ = 10 \\cdot \\frac{1}{2} = 5\\text{ cm}$."
+            },
+            {
+                question: "12. Дуж $AB$ дужине $14\\text{ cm}$ је паралелна са равни пројектовања $\\alpha$. Колика је дужина њене ортогоналне пројекције $A'B'$ на ту раван?",
+                rawOptions: ["$14\\text{ cm}$", "$0\\text{ cm}$", "$7\\text{ cm}$", "$14\\sqrt{2}\\text{ cm}$"],
+                correctIndex: 0,
+                solution: "Када је дуж паралелна са равни пројектовања (угао $\\varphi = 0^\\circ$), њена ортогонална пројекција на ту раван има потпуно исту дужину као и оригинална дуж ($A'B' = AB = 14\\text{ cm}$)."
+            },
+            {
+                question: "13. Конвексни полиедар има $8$ темена ($V = 8$) и $12$ ивица ($E = 12$). Колико пљосни ($F$) има овај полиедар према Ојлеровој формули?",
+                rawOptions: ["$6$", "$8$", "$10$", "$4$"],
+                correctIndex: 0,
+                solution: "Ојлерова формула за конвексне полиедре гласи: $V - E + F = 2$. Уврштавањем датих вредности: $8 - 12 + F = 2 \\implies -4 + F = 2 \\implies F = 6$. По посматраним подацима ради се о коцки или квадру."
+            },
+            {
+                question: "14. Колико ивица ($E$), темена ($V$) и пљосни ($F$) има **седмострана пирамида**?",
+                rawOptions: [
+                    "$E = 14, V = 8, F = 8$",
+                    "$E = 21, V = 14, F = 9$",
+                    "$E = 12, V = 7, F = 7$",
+                    "$E = 16, V = 8, F = 10$"
+                ],
+                correctIndex: 0,
+                solution: "Седмострана пирамида у основи има геаометријски слику седмоугла (7 ивица основе + 7 бочних ивица = 14 ивица укупно, $E = 14$). Има 7 темена основе плус 1 врх ($V = 8$) и 7 бочних страна плус 1 основу ($F = 8$). Заиста важи Ојлерова формула: $8 - 14 + 8 = 2$."
+            }
+        ];
+
+        let activeQuizData = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let isAnswered = false;
+        let userAnswers = [];
+
+        // DOM Elements
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainerEl = document.getElementById('options-container');
+        const feedbackBlock = document.getElementById('feedback-block');
+        const feedbackStatus = document.getElementById('feedback-status');
+        const solutionTextEl = document.getElementById('solution-text');
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercent = document.getElementById('progress-percent');
+        const questionBadge = document.getElementById('question-number-badge');
+        const quizCard = document.getElementById('quiz-card');
+        const resultsCard = document.getElementById('results-card');
+
+        // Prepare randomized dataset where options are shuffled with dynamic A), Б), В), Г) labels
+        function prepareShuffledQuiz() {
+            const prefixes = ["А) ", "Б) ", "В) ", "Г) "];
+
+            return rawQuizData.map((q, idx) => {
+                // Map raw options into object list
+                let optionsList = q.rawOptions.map((optText, origIdx) => ({
+                    text: optText,
+                    isCorrect: origIdx === q.correctIndex
+                }));
+
+                // Shuffle options using Fisher-Yates algorithm
+                for (let i = optionsList.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [optionsList[i], optionsList[j]] = [optionsList[j], optionsList[i]];
+                }
+
+                // Identify new correct index
+                const newCorrectIndex = optionsList.findIndex(o => o.isCorrect);
+
+                // Attach Serbian Cyrillic option prefixes
+                const formattedOptions = optionsList.map((o, pIdx) => prefixes[pIdx] + o.text);
+
+                return {
+                    questionNum: idx + 1,
+                    questionText: q.question,
+                    options: formattedOptions,
+                    correct: newCorrectIndex,
+                    solution: q.solution
+                };
+            });
+        }
+
+        // Initialize quiz on page load
+        window.onload = function() {
+            restartQuiz();
+        };
+
+        function renderQuestion() {
+            isAnswered = false;
+            feedbackBlock.classList.add('hidden');
+
+            const q = activeQuizData[currentQuestion];
+            questionTextEl.innerHTML = q.questionText;
+
+            // Render Options with baseline flex structure
+            optionsContainerEl.innerHTML = '';
+            q.options.forEach((opt, index) => {
+                const optBtn = document.createElement('button');
+                optBtn.className = 'option-btn w-full text-left p-4 rounded-xl border border-slate-200 hover:border-teal-500 hover:bg-teal-50/50 cursor-pointer transition duration-150 flex items-center justify-between math-content shadow-xs min-h-[3.5rem]';
+                optBtn.onclick = () => selectOption(index);
+                optBtn.innerHTML = `
+                    <div class="option-content pr-3 text-slate-800 font-medium">
+                        ${opt}
+                    </div>
+                    <span class="indicator-circle w-6 h-6 border-2 border-slate-300 rounded-full flex items-center justify-center shrink-0 text-xs"></span>
+                `;
+                optionsContainerEl.appendChild(optBtn);
+            });
+
+            // Update Progress Bar & Badges
+            const percent = Math.round(((currentQuestion + 1) / activeQuizData.length) * 100);
+            progressBar.style.width = `${percent}%`;
+            progressPercent.textContent = `${percent}% Комплетирано`;
+            questionBadge.textContent = `Питање ${currentQuestion + 1} од ${activeQuizData.length}`;
+
+            // Trigger MathJax re-render for new HTML content
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        function selectOption(index) {
+            if (isAnswered) return; // Prevent double clicks
+            isAnswered = true;
+
+            const q = activeQuizData[currentQuestion];
+            const isCorrect = (index === q.correct);
+
+            userAnswers.push({
+                questionNum: currentQuestion + 1,
+                questionText: q.questionText,
+                selectedOption: index,
+                correctOption: q.correct,
+                isCorrect: isCorrect
+            });
+
+            if (isCorrect) score++;
+
+            // Lock options and apply answer feedback styles
+            const buttons = optionsContainerEl.querySelectorAll('.option-btn');
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:border-teal-500', 'hover:bg-teal-50/50', 'cursor-pointer');
+                btn.classList.add('cursor-default');
+
+                const indicator = btn.querySelector('.indicator-circle');
+
+                if (idx === index) {
+                    if (isCorrect) {
+                        // User chose CORRECT option
+                        btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-medium transition duration-200 flex items-center justify-between math-content shadow-sm min-h-[3.5rem]';
+                        indicator.className = 'indicator-circle w-6 h-6 rounded-full bg-emerald-600 text-white border border-emerald-600 flex items-center justify-center text-xs font-bold shrink-0';
+                        indicator.innerHTML = '&#10003;'; // Checkmark
+                    } else {
+                        // User chose INCORRECT option
+                        btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-950 font-medium transition duration-200 flex items-center justify-between math-content shadow-sm min-h-[3.5rem]';
+                        indicator.className = 'indicator-circle w-6 h-6 rounded-full bg-rose-600 text-white border border-rose-600 flex items-center justify-center text-xs font-bold shrink-0';
+                        indicator.innerHTML = '&#10007;'; // Cross mark
+                    }
+                } else if (idx === q.correct && !isCorrect) {
+                    // Show the correct answer highlighted if user picked wrong
+                    btn.className = 'option-btn w-full text-left p-4 rounded-xl border-2 border-emerald-400 bg-emerald-50/70 text-emerald-950 font-medium transition duration-200 flex items-center justify-between math-content min-h-[3.5rem]';
+                    indicator.className = 'indicator-circle w-6 h-6 rounded-full border-2 border-emerald-600 text-emerald-700 bg-emerald-100 flex items-center justify-center text-xs font-bold shrink-0';
+                    indicator.innerHTML = '&#10003;';
+                } else {
+                    // Neutral unselected option
+                    btn.className = 'option-btn w-full text-left p-4 rounded-xl border border-slate-200 text-slate-400 opacity-60 transition duration-200 flex items-center justify-between math-content min-h-[3.5rem]';
+                    indicator.className = 'indicator-circle w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center shrink-0';
+                    indicator.innerHTML = '';
+                }
+            });
+
+            // Display feedback block immediately
+            feedbackBlock.classList.remove('hidden');
+            if (isCorrect) {
+                feedbackBlock.className = 'mt-6 p-5 rounded-xl border bg-emerald-50/80 border-emerald-200 text-emerald-900 shadow-sm';
+                feedbackStatus.innerHTML = `<span class="text-emerald-600 text-xl">&#10004;</span> <span class="font-bold text-emerald-800">Тачан одговор! Браво!</span>`;
+            } else {
+                feedbackBlock.className = 'mt-6 p-5 rounded-xl border bg-rose-50/80 border-rose-200 text-rose-900 shadow-sm';
+                feedbackStatus.innerHTML = `<span class="text-rose-600 text-xl">&#10008;</span> <span class="font-bold text-rose-800">Нетачан одговор. Погледај поступак:</span>`;
+            }
+
+            solutionTextEl.innerHTML = q.solution;
+
+            // Trigger MathJax re-render for feedback content
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < activeQuizData.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizCard.classList.add('hidden');
+            resultsCard.classList.remove('hidden');
+
+            const total = activeQuizData.length;
+            const percentage = Math.round((score / total) * 100);
+
+            document.getElementById('final-score').textContent = `${score} / ${total}`;
+            document.getElementById('final-percentage').textContent = `${percentage}% Успешност`;
+
+            const gradeBadge = document.getElementById('grade-badge');
+            const messageEl = document.getElementById('motivational-message');
+
+            if (percentage >= 90) {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-emerald-100 text-emerald-800";
+                gradeBadge.textContent = "Оцена: Одличан (5)";
+                messageEl.textContent = "Спреман си за највишу оцену! Одлично владаш сличношћу, Еуклидовим теоремама и просторном геометријом.";
+            } else if (percentage >= 75) {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-blue-100 text-blue-800";
+                gradeBadge.textContent = "Оцена: Врло добар (4)";
+                messageEl.textContent = "Врло добро знање! Прегледај ситне грешке у размери или формулацијама за полиедре да обезбедиш петицу.";
+            } else if (percentage >= 60) {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-amber-100 text-amber-800";
+                gradeBadge.textContent = "Оцена: Добар (3)";
+                messageEl.textContent = "Добро урађено, али обрати пажњу на Еуклидове теореме и ортогоналне пројекције.";
+            } else if (percentage >= 50) {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-orange-100 text-orange-800";
+                gradeBadge.textContent = "Оцена: Довољан (2)";
+                messageEl.textContent = "Прешао си праг, али је потребно додатно вежбање пре самог писменог задатка.";
+            } else {
+                gradeBadge.className = "inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-rose-100 text-rose-800";
+                gradeBadge.textContent = "Оцена: Недовољан (1)";
+                messageEl.textContent = "Препоручује се да поново прођеш кроз све задатке и темељно прочиташ поступке решавања.";
+            }
+
+            // Render detailed breakdown list
+            const breakdownContainer = document.getElementById('answers-breakdown');
+            breakdownContainer.innerHTML = '';
+            userAnswers.forEach((ans) => {
+                const item = document.createElement('div');
+                item.className = `p-3.5 rounded-xl border flex justify-between items-center ${ans.isCorrect ? 'bg-emerald-50/60 border-emerald-200' : 'bg-rose-50/60 border-rose-200'}`;
+                item.innerHTML = `
+                    <div class="math-content text-sm pr-2">
+                        <span class="font-bold">${ans.questionNum}.</span> ${ans.questionText.replace(/^\d+\.\s*/, '')}
+                    </div>
+                    <span class="font-bold text-xs px-2.5 py-1 rounded-full shrink-0 ${ans.isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                        ${ans.isCorrect ? 'Тачно' : 'Нетачно'}
+                    </span>
+                `;
+                breakdownContainer.appendChild(item);
+            });
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        function restartQuiz() {
+            activeQuizData = prepareShuffledQuiz(); // Re-shuffle options for fresh start
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            resultsCard.classList.add('hidden');
+            quizCard.classList.remove('hidden');
+            renderQuestion();
+        }
+    </script>
+</body>
+</html>
