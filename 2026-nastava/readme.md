@@ -19,6 +19,13 @@
 [631]: https://photos.app.goo.gl/qQnjeTgM4hU8GssC6 "Фотографије табле"
 [632]: https://ndjapic.github.io/school/2026-nastava/mat6/kvartal1.html "Квиз из градива у првом кварталу"
 
+### Троугао 2 / 2
+
+| [Фотографије][641]
+|
+
+[641]: https://photos.app.goo.gl/JxG9BsN1H48NypPX8 "Фотографије табле"
+
 ## Математика 8
 
 ### Иницијални тест
