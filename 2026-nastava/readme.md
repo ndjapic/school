@@ -19,7 +19,7 @@
 
 [631]: https://photos.app.goo.gl/qQnjeTgM4hU8GssC6 "Фотографије табле"
 [632]: https://ndjapic.github.io/school/2026-nastava/mat6/pismeni1/kviz1/index.html "Први квиз из градива у првом кварталу"
-[633]: https://ndjapic.github.io/school/2026-nastava/mat6/pismeni1/kviz1/index.html "Други квиз из градива у првом кварталу"
+[633]: https://ndjapic.github.io/school/2026-nastava/mat6/pismeni1/kviz2/index.html "Други квиз из градива у првом кварталу"
 
 ### Троугао 2 / 2
 
