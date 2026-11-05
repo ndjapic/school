@@ -53,9 +53,5 @@
 [832]: https://ndjapic.github.io/school/2026-nastava/mat8/pismeni1/kviz.html "Квиз из градива у првом кварталу"
 [833]: https://github.com/ndjapic/2025-nastava/tree/main/mat8/03-stereometrija "Страница од 2025"
 
-### Линеарне једначине са једном непознатом
 
-| [Фотографије][841]
-|
 
-[841]: https://photos.app.goo.gl/Z2sBAtm4FAZxLg9F6 "Фотографије табле"
