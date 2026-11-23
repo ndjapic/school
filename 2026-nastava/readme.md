@@ -30,6 +30,15 @@
 
 [641]: https://photos.app.goo.gl/JxG9BsN1H48NypPX8 "Фотографије табле"
 
+### Рационални бројеви 1 / 3
+
+| [Фотографије][651]
+| [Квиз1][652]
+|
+
+[651]: https://photos.app.goo.gl/Q3Xj49ieMA7bHr676 "Фотографије табле"
+[632]: https://ndjapic.github.io/school/2026-nastava/mat6/pismeni2/kviz1/index.html "Први квиз из градива за други писмени задатак"
+
 ## Математика 8
 
 ### Иницијални тест
