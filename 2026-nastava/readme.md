@@ -37,7 +37,7 @@
 |
 
 [651]: https://photos.app.goo.gl/Q3Xj49ieMA7bHr676 "Фотографије табле"
-[632]: https://ndjapic.github.io/school/2026-nastava/mat6/pismeni2/kviz1/index.html "Први квиз из градива за други писмени задатак"
+[652]: https://ndjapic.github.io/school/2026-nastava/mat6/pismeni2/kviz1/index.html "Први квиз из градива за други писмени задатак"
 
 ## Математика 8
 
@@ -61,6 +61,13 @@
 [831]: https://photos.app.goo.gl/Z2sBAtm4FAZxLg9F6 "Фотографије табле"
 [832]: https://ndjapic.github.io/school/2026-nastava/mat8/pismeni1/kviz.html "Квиз из градива у првом кварталу"
 [833]: https://github.com/ndjapic/2025-nastava/tree/main/mat8/03-stereometrija "Страница од 2025"
+
+### Линеарне једначине
+
+| [Фотографије][841]
+|
+
+[841]: https://photos.app.goo.gl/R1USQ58sq8zWzGaVA "Фотографије табле"
 
 
 
