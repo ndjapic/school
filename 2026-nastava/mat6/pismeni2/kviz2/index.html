@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Домаћи задатак 2 – Припрема за писмени задатак (6. разред)</title>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --accent: #0284c7;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --success-bg: #dcfce7;
+      --success-border: #16a34a;
+      --success-text: #14532d;
+      --error-bg: #fee2e2;
+      --error-border: #dc2626;
+      --error-text: #7f1d1d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px 12px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f766e, #0284c7);
+      color: #ffffff;
+      padding: 28px 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.22);
+      margin-bottom: 24px;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: 0.4px;
+    }
+
+    header h1 {
+      margin: 0 0 8px 0;
+      font-size: 1.55rem;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.94;
+      font-size: 0.96rem;
+    }
+
+    .student-info {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .student-info {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .field input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+    }
+
+    .section-title {
+      background: #e2e8f0;
+      color: #0f172a;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 28px 0 16px 0;
+      border-left: 5px solid var(--primary);
+    }
+
+    .question-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      transition: border-color 0.2s;
+    }
+
+    .question-card.unanswered {
+      border: 2px solid #f59e0b;
+    }
+
+    .question-card.correct {
+      border: 2px solid var(--success-border);
+    }
+
+    .question-card.incorrect {
+      border: 2px solid var(--error-border);
+    }
+
+    .question-text {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+    }
+
+    .q-num {
+      color: var(--primary);
+      margin-right: 6px;
+    }
+
+    .sketch-box {
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 12px 0 16px 0;
+      text-align: center;
+    }
+
+    .sketch-box svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+
+    .option-label:hover {
+      background-color: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .option-label input[type="radio"] {
+      margin-right: 12px;
+      transform: scale(1.15);
+      accent-color: var(--primary);
+    }
+
+    .option-label.correct-choice {
+      background-color: var(--success-bg);
+      border-color: var(--success-border);
+      color: var(--success-text);
+      font-weight: 600;
+    }
+
+    .option-label.wrong-choice {
+      background-color: var(--error-bg);
+      border-color: var(--error-border);
+      color: var(--error-text);
+    }
+
+    /* Приказ разломака */
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 3px;
+      font-size: 0.92em;
+      line-height: 1.1;
+    }
+
+    .frac .num {
+      border-bottom: 1.5px solid currentColor;
+      padding: 0 3px 1px 3px;
+    }
+
+    .frac .den {
+      padding: 1px 3px 0 3px;
+    }
+
+    .explanation {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.94rem;
+      background-color: #f8fafc;
+      border-left: 4px solid #64748b;
+    }
+
+    .explanation.show {
+      display: block;
+    }
+
+    .explanation.ok {
+      background-color: var(--success-bg);
+      border-left-color: var(--success-border);
+      color: var(--success-text);
+    }
+
+    .explanation.bad {
+      background-color: var(--error-bg);
+      border-left-color: var(--error-border);
+      color: var(--error-text);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    button {
+      padding: 13px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:active {
+      transform: scale(0.99);
+    }
+
+    .btn-submit {
+      background-color: var(--primary);
+      color: #ffffff;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-reset {
+      background-color: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .btn-reset:hover {
+      background-color: #cbd5e1;
+    }
+
+    .btn-print {
+      background-color: var(--accent);
+      color: #ffffff;
+      display: none;
+    }
+
+    .btn-print:hover {
+      background-color: #0369a1;
+    }
+
+    #result-box {
+      display: none;
+      background: var(--card);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 22px;
+      margin-top: 24px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    #result-box h2 {
+      margin: 0 0 8px 0;
+      color: var(--primary-dark);
+    }
+
+    .score-big {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 8px 0;
+      color: #0f172a;
+    }
+
+    .warning-msg {
+      display: none;
+      background-color: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .actions, .warning-msg, footer {
+        display: none !important;
+      }
+      header {
+        background: #0f766e !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge">ДОМАЋИ ЗАДАТАК #2 • СРЕДЊИ НИВО</div>
+    <h1>Припрема за писмени задатак – Математика (6. разред)</h1>
+    <p>Области: <strong>Рационални бројеви (увод)</strong> и <strong>Троугао (конструкције)</strong> • Писмени задатак: 30. новембар 2026.</p>
+  </header>
+
+  <div class="student-info">
+    <div class="field">
+      <label for="studentName">Име и презиме ученика:</label>
+      <input type="text" id="studentName" placeholder="Унеси своје име и презиме...">
+    </div>
+    <div class="field">
+      <label for="studentClass">Одељење:</label>
+      <input type="text" id="studentClass" placeholder="нпр. VI-1">
+    </div>
+  </div>
+
+  <div id="quiz-container"></div>
+
+  <div id="warning-msg" class="warning-msg">
+    Ниси одговорио/ла на сва питања. Одговори на означена питања па поново кликни на дугме за проверу.
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn-submit" onclick="gradeQuiz()">Предај тест и провери резултате</button>
+    <button type="button" class="btn-print" id="printBtn" onclick="window.print()">Одштампај / Сачувај PDF</button>
+    <button type="button" class="btn-reset" onclick="resetQuiz()">Почни поново</button>
+  </div>
+
+  <div id="result-box"></div>
+
+  <footer>
+    Математика за 6. разред • Вежбање за први писмени задатак
+  </footer>
+</div>
+
+<script>
+  function frac(n, d) {
+    return `<span class="frac"><span class="num">${n}</span><span class="den">${d}</span></span>`;
+  }
+
+  const questions = [
+    // ДЕО I: Рационални бројеви (увод)
+    {
+      section: "I део: Рационални бројеви (увод)",
+      text: `Колико износи вредност израза ${frac("3", "4")} − |−1,25| + |−${frac("1", "2")}|?`,
+      options: [
+        "0",
+        "2,5",
+        "−1",
+        "1,5"
+      ],
+      correct: 0,
+      explanation: `Преведемо разломке у децималне бројеве и одредимо апсолутне вредности: 0,75 − 1,25 + 0,5 = −0,5 + 0,5 = 0.`
+    },
+    {
+      text: `Који од следећих разломака је једнак разломку −${frac(28, 42)} и притом има именилац 15?`,
+      options: [
+        `−${frac(10, 15)}`,
+        `−${frac(12, 15)}`,
+        `−${frac(8, 15)}`,
+        `−${frac(14, 15)}`
+      ],
+      correct: 0,
+      explanation: `Прво скратимо разломак −28/42 бројем 14 и добијамо −2/3. Затим проширимо −2/3 бројем 5: −(2·5)/(3·5) = −10/15.`
+    },
+    {
+      text: `Колико има целих бројева $x$ за које важи неједнакост |x| ≤ ${frac(11, 3)}?`,
+      options: [
+        "7",
+        "6",
+        "8",
+        "3"
+      ],
+      correct: 0,
+      explanation: `Разломак 11/3 = 3 цела и 2/3. Цели бројеви чија је апсолутна вредност мања или једнака 3⅔ су: −3, −2, −1, 0, 1, 2 и 3 — укупно 7 бројева.`
+    },
+    {
+      text: `Који од наведених низова приказује бројеве −0,65; −${frac(3, 4)}; −0,6 и −${frac(7, 10)} поређане од НАЈМАЊЕГ до НАЈВЕЋЕГ?`,
+      options: [
+        `−${frac(3, 4)} < −${frac(7, 10)} < −0,65 < −0,6`,
+        `−0,6 < −0,65 < −${frac(7, 10)} < −${frac(3, 4)}`,
+        `−${frac(7, 10)} < −${frac(3, 4)} < −0,65 < −0,6`,
+        `−${frac(3, 4)} < −0,65 < −${frac(7, 10)} < −0,6`
+      ],
+      correct: 0,
+      explanation: `Све бројеве запишемо у децималном облику: −3/4 = −0,75; −7/10 = −0,70; −0,65; −0,60. Пошто су сви негативни, најмањи је онај са највећом апсолутном вредношћу: −0,75 < −0,70 < −0,65 < −0,60.`
+    },
+    {
+      text: `Када се разломак −${frac(5, 11)} запише у децималном облику, добија се бесконачан периодичан децимални број. Који је то запис?`,
+      options: [
+        "−0,(45)",
+        "−0,4(5)",
+        "−0,(54)",
+        "−0,45"
+      ],
+      correct: 0,
+      explanation: `Дељењем 5 : 11 добија се 0,454545..., где се група цифара 45 бесконачно понавља, па је запис −0,(45).`
+    },
+    {
+      text: `Тачка A на бројевној правој одговара броју −1,8, а тачка B одговара броју супротном броју −2,4. Који рационалан број одговара средишту дужи AB?`,
+      options: [
+        "0,3",
+        "−2,1",
+        "2,1",
+        "−0,3"
+      ],
+      correct: 0,
+      explanation: `Број супротан броју −2,4 је +2,4 (тачка B). Растојање између A(−1,8) и B(2,4) је 1,8 + 2,4 = 4,2. Половина растојања је 2,1, па је средиште на −1,8 + 2,1 = 0,3.`
+    },
+
+    // ДЕО II: Троугао – конструкције
+    {
+      section: "II део: Троугао – конструкције",
+      text: "Тачка M припада симетрали дужи AB. Ако је обим троугла ABM једнак 24 cm, а дужина дужи AB износи 10 cm, колика је дужина дужи AM?",
+      sketch: `
+        <svg width="240" height="125" viewBox="0 0 240 125">
+          <line x1="30" y1="95" x2="210" y2="95" stroke="#0f172a" stroke-width="2"/>
+          <line x1="120" y1="10" x2="120" y2="115" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <line x1="30" y1="95" x2="120" y2="28" stroke="#0284c7" stroke-width="2"/>
+          <line x1="210" y1="95" x2="120" y2="28" stroke="#0284c7" stroke-width="2"/>
+          <circle cx="30" cy="95" r="3.5" fill="#0f172a"/>
+          <circle cx="210" cy="95" r="3.5" fill="#0f172a"/>
+          <circle cx="120" cy="28" r="3.5" fill="#0f766e"/>
+          <text x="18" y="102" font-size="13" font-weight="bold" fill="#0f172a">A</text>
+          <text x="215" y="102" font-size="13" font-weight="bold" fill="#0f172a">B</text>
+          <text x="126" y="28" font-size="13" font-weight="bold" fill="#0f766e">M</text>
+          <text x="125" y="114" font-size="12" fill="#0f766e">s</text>
+          <text x="103" y="110" font-size="12" fill="#475569">10 cm</text>
+        </svg>
+      `,
+      options: [
+        "7 cm",
+        "14 cm",
+        "5 cm",
+        "12 cm"
+      ],
+      correct: 0,
+      explanation: "Свака тачка на симетрали дужи једнако је удаљена од крајева те дужи, па је AM = BM. Како је O = AB + AM + BM = 24 cm, имамо 10 + 2·AM = 24, одакле је 2·AM = 14, односно AM = 7 cm."
+    },
+    {
+      text: "Углови α и β су упоредни углови. Ако је угао α = 124°, колики оштар угао граде симетрала угла α и симетрала угла β?",
+      options: [
+        "90° (прав угао)",
+        "62°",
+        "28°",
+        "56°"
+      ],
+      correct: 0,
+      explanation: "Збир упоредних углова је α + β = 180°. Симетрале их деле на половине, па је угао између симетрала једнак α/2 + β/2 = (α + β)/2 = 180°/2 = 90° (увек прав угао)."
+    },
+    {
+      text: "Како се помоћу шестара и лењира без подеока може конструисати угао од 105°?",
+      options: [
+        "Конструише се угао од 90°, а затим се на њега надовеже половина угла од 30° (15°)",
+        "Конструише се угао од 120°, а затим се од њега одузме угао од 30°",
+        "Подели се угао од 150° симетралом на два једнака дела",
+        "Надовежу се два угла од 60° један на други"
+      ],
+      correct: 0,
+      explanation: "90° + 15° = 105°. Угао од 15° добијамо тако што конструишемо 60°, поделимо га симетралом на 30°, а затим поново симетралом на 15°."
+    },
+    {
+      text: "За конструкцију троугла ABC задати су елементи: страница c = 6,5 cm, угао α = 60° и угао β = 45°. На основу ког става подударности се конструише овај троугао?",
+      options: [
+        "УСУ (угао–страница–угао)",
+        "СУС (страница–угао–страница)",
+        "ССС (страница–страница–страница)",
+        "ССУ (страница–страница–угао)"
+      ],
+      correct: 0,
+      explanation: "Задата је једна страница (c = AB) и оба угла која належу на ту страницу (α код темена A и β код темена B), што одговара ставу УСУ."
+    },
+    {
+      text: "За који од наведених скупова елемената је МОГУЋЕ конструисати троугао ABC?",
+      options: [
+        "a = 6 cm, b = 8 cm, γ = 75°",
+        "a = 4 cm, b = 5 cm, c = 10 cm",
+        "c = 7 cm, α = 110°, β = 75°",
+        "a = 3 cm, b = 9 cm, c = 6 cm"
+      ],
+      correct: 0,
+      explanation: "За a = 6 cm, b = 8 cm и угао γ = 75° између њих, троугао је јединствено одређен по ставу СУС. У осталим случајевима није испуњена неједнакост троугла (4+5 < 10; 3+6 = 9) или је збир два угла већи од 180° (110°+75° = 185°)."
+    },
+    {
+      text: "Приликом конструкције правоуглог троугла ABC (прави угао је код темена C) задати су хипотенуза c = 7 cm и катета a = 4 cm. Који став подударности омогућава конструкцију овог троугла?",
+      sketch: `
+        <svg width="230" height="125" viewBox="0 0 230 125">
+          <polygon points="40,95 185,95 40,25" fill="none" stroke="#0f172a" stroke-width="2"/>
+          <polyline points="40,81 54,81 54,95" fill="none" stroke="#0f766e" stroke-width="1.5"/>
+          <circle cx="48" cy="88" r="1.5" fill="#0f766e"/>
+          <text x="25" y="102" font-size="13" font-weight="bold">C</text>
+          <text x="190" y="102" font-size="13" font-weight="bold">B</text>
+          <text x="27" y="25" font-size="13" font-weight="bold">A</text>
+          <text x="95" y="112" font-size="12" fill="#475569">a = 4 cm</text>
+          <text x="115" y="53" font-size="12" fill="#0284c7" font-weight="bold">c = 7 cm</text>
+        </svg>
+      `,
+      options: [
+        "ССУ (две странице и угао наспрам веће од њих)",
+        "УСУ (угао–страница–угао)",
+        "СУС (две странице и угао захваћен њима)",
+        "ССС (све три странице)"
+      ],
+      correct: 0,
+      explanation: "Задате су две странице (c и a) и угао γ = 90° који се налази наспрам веће странице (хипотенузе c = 7 cm > 4 cm), па се примењује став ССУ."
+    }
+  ];
+
+  function renderQuiz() {
+    const container = document.getElementById("quiz-container");
+    let html = "";
+
+    questions.forEach((q, idx) => {
+      if (q.section) {
+        html += `<div class="section-title">${q.section}</div>`;
+      }
+
+      html += `
+        <div class="question-card" id="card-${idx}">
+          <div class="question-text"><span class="q-num">${idx + 1}.</span> ${q.text}</div>
+          ${q.sketch ? `<div class="sketch-box">${q.sketch}</div>` : ""}
+          <div class="options">
+            ${q.options.map((opt, optIdx) => `
+              <label class="option-label" id="opt-${idx}-${optIdx}">
+                <input type="radio" name="q${idx}" value="${optIdx}" onchange="clearUnanswered(${idx})">
+                <span>${opt}</span>
+              </label>
+            `).join("")}
+          </div>
+          <div class="explanation" id="exp-${idx}"></div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+  }
+
+  function clearUnanswered(idx) {
+    document.getElementById(`card-${idx}`).classList.remove("unanswered");
+  }
+
+  function gradeQuiz() {
+    const warning = document.getElementById("warning-msg");
+    let unansweredCount = 0;
+
+    questions.forEach((_, idx) => {
+      const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+      const card = document.getElementById(`card-${idx}`);
+      if (!selected) {
+        card.classList.add("unanswered");
+        unansweredCount++;
+      } else {
+        card.classList.remove("unanswered");
+      }
+    });
+
+    if (unansweredCount > 0) {
+      warning.style.display = "block";
+      warning.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    warning.style.display = "none";
+    let score = 0;
+
+    questions.forEach((q, idx) => {
+      const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+      const userVal = parseInt(selected.value, 10);
+      const card = document.getElementById(`card-${idx}`);
+      const exp = document.getElementById(`exp-${idx}`);
+
+      document.querySelectorAll(`input[name="q${idx}"]`).forEach(inp => inp.disabled = true);
+
+      const correctOpt = document.getElementById(`opt-${idx}-${q.correct}`);
+      correctOpt.classList.add("correct-choice");
+
+      if (userVal === q.correct) {
+        score++;
+        card.classList.add("correct");
+        exp.className = "explanation show ok";
+        exp.innerHTML = `<strong>Тачно!</strong> ${q.explanation}`;
+      } else {
+        card.classList.add("incorrect");
+        const wrongOpt = document.getElementById(`opt-${idx}-${userVal}`);
+        wrongOpt.classList.add("wrong-choice");
+        exp.className = "explanation show bad";
+        exp.innerHTML = `<strong>Нетачно.</strong> ${q.explanation}`;
+      }
+    });
+
+    const name = document.getElementById("studentName").value.trim() || "Ученик";
+    const sClass = document.getElementById("studentClass").value.trim();
+    const percent = Math.round((score / questions.length) * 100);
+
+    let feedback = "";
+    if (percent >= 85) {
+      feedback = "Одличан резултат! Овај ниво знања гарантује успех на писменом задатку.";
+    } else if (percent >= 65) {
+      feedback = "Врло добро! Провери објашњења код питања где си погрешио/ла да би утврдио/ла градиво.";
+    } else if (percent >= 50) {
+      feedback = "Солидан резултат, али је потребно да још мало провежбаш конструкције и рад са негативним бројевима.";
+    } else {
+      feedback = "Пажљиво прочитај поступке решења испод сваког задатка, па понови тест.";
+    }
+
+    const resultBox = document.getElementById("result-box");
+    resultBox.style.display = "block";
+    resultBox.innerHTML = `
+      <h2>Резултат домаћег задатка #2</h2>
+      <p><strong>Ученик:</strong> ${escapeHtml(name)} ${sClass ? `(${escapeHtml(sClass)})` : ""}</p>
+      <div class="score-big">${score} / ${questions.length} (${percent}%)</div>
+      <p>${feedback}</p>
+    `;
+
+    document.getElementById("printBtn").style.display = "inline-block";
+    resultBox.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function resetQuiz() {
+    document.getElementById("result-box").style.display = "none";
+    document.getElementById("warning-msg").style.display = "none";
+    document.getElementById("printBtn").style.display = "none";
+    renderQuiz();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  renderQuiz();
+</script>
+
+</body>
+</html>
