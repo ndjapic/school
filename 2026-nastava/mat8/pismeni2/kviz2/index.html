@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Нови домаћи задатак: Линеарне једначине (8. разред)</title>
+  <style>
+    /* ==========================================================================
+       ДИЗАЈН ТОКЕНИ И ОСНОВНИ СТИЛОВИ (Светла образовна тема)
+       ========================================================================== */
+    :root {
+      --navy-900: #0d2340;
+      --navy-800: #163863;
+      --navy-700: #22518c;
+      --navy-100: #e7f0fb;
+      --navy-50: #f4f8fd;
+
+      --teal-700: #0f766e;
+      --teal-600: #0d9488;
+      --teal-500: #14b8a6;
+      --teal-100: #ccfbf1;
+      --teal-50: #f0fdfa;
+
+      --amber-700: #b45309;
+      --amber-100: #fef3c7;
+      --amber-50: #fffbeb;
+
+      --rose-700: #be123c;
+      --rose-600: #e11d48;
+      --rose-100: #ffe4e6;
+      --rose-50: #fff1f2;
+
+      --slate-900: #0f172a;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-300: #cbd5e1;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --bg-page: #f5f8fc;
+      --white: #ffffff;
+
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+
+      --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 8px 24px rgba(13, 35, 64, 0.08);
+      --shadow-lg: 0 14px 34px rgba(13, 35, 64, 0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      background-color: var(--bg-page);
+      color: var(--slate-900);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ==========================================================================
+       МАТЕМАТИЧКИ ЗАПИС РАЗЛОМАКА (.frac) И СТЕПЕНА
+       ========================================================================== */
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 0.24em;
+      font-size: 0.92em;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .frac .num {
+      border-bottom: 1.6px solid currentColor;
+      padding: 0 0.28em 2px;
+      text-align: center;
+      display: block;
+    }
+
+    .frac .den {
+      padding: 2px 0.28em 0;
+      text-align: center;
+      display: block;
+    }
+
+    sup, sub {
+      font-size: 0.74em;
+      line-height: 0;
+    }
+
+    /* ==========================================================================
+       ЗАГЛАВЉЕ АПЛИКАЦИЈЕ (HERO HEADER)
+       ========================================================================== */
+    .hero-header {
+      background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 56%, var(--teal-700) 100%);
+      color: var(--white);
+      padding: 2.2rem 1.25rem 2.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .school-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #f0fdfa;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-title {
+      margin: 0 0 0.65rem;
+      font-size: clamp(1.5rem, 3.3vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+    }
+
+    .deadline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(20, 184, 166, 0.24);
+      border: 1px solid rgba(153, 246, 228, 0.48);
+      color: #ffffff;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.94rem;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       ГЛАВНИ КОНТЕЈНЕР И КАРТИЦА ЗА ПОДАТКЕ УЧЕНИКА
+       ========================================================================== */
+    .container {
+      max-width: 900px;
+      margin: -1.5rem auto 3.5rem;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .student-card-title {
+      margin: 0 0 0.35rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .student-card-desc {
+      margin: 0 0 1.15rem;
+      color: var(--slate-600);
+      font-size: 0.93rem;
+    }
+
+    .student-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .student-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--slate-700);
+    }
+
+    .form-label span.req {
+      color: var(--rose-600);
+    }
+
+    .form-label span.opt {
+      color: var(--slate-500);
+      font-weight: 500;
+      font-size: 0.82rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.72rem 0.95rem;
+      border: 1.5px solid var(--slate-300);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--slate-900);
+      background-color: var(--white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--navy-700);
+      box-shadow: 0 0 0 3px rgba(34, 81, 140, 0.15);
+    }
+
+    .form-input.input-error {
+      border-color: var(--rose-600);
+      background-color: var(--rose-50);
+    }
+
+    .form-input:disabled {
+      background-color: var(--slate-100);
+      color: var(--slate-700);
+      cursor: not-allowed;
+    }
+
+    .inline-alert {
+      display: none;
+      margin-top: 0.9rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      background-color: var(--rose-50);
+      border: 1px solid #fecdd3;
+      color: var(--rose-700);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .inline-alert.visible {
+      display: block;
+    }
+
+    /* ==========================================================================
+       ЛЕПЉИВА ТРАКА НАПРЕТКА (STICKY PROGRESS BAR)
+       ========================================================================== */
+    .progress-bar-wrapper {
+      position: sticky;
+      top: 0.65rem;
+      z-index: 30;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 0.85rem 1.15rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .progress-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .progress-text {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy-900);
+    }
+
+    .progress-text strong {
+      color: var(--teal-700);
+    }
+
+    .progress-percent {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--slate-600);
+      background: var(--slate-100);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 9px;
+      background: var(--slate-200);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 0.65rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--navy-700), var(--teal-500));
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .question-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .q-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      border: 1px solid var(--slate-300);
+      background: var(--white);
+      color: var(--slate-700);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+      padding: 0;
+    }
+
+    .q-dot:hover {
+      border-color: var(--navy-700);
+      background: var(--navy-50);
+    }
+
+    .q-dot.answered {
+      background: var(--navy-800);
+      border-color: var(--navy-800);
+      color: var(--white);
+    }
+
+    .q-dot.graded-correct {
+      background: var(--teal-600);
+      border-color: var(--teal-600);
+      color: var(--white);
+    }
+
+    .q-dot.graded-wrong {
+      background: var(--rose-600);
+      border-color: var(--rose-600);
+      color: var(--white);
+    }
+
+    /* ==========================================================================
+       КАРТИЦА РЕЗУЛТАТА (НАКОН ПРЕДАЈЕ)
+       ========================================================================== */
+    .results-card {
+      display: none;
+      background: var(--white);
+      border: 2px solid var(--teal-500);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      animation: fadeSlideIn 0.4s ease;
+    }
+
+    .results-card.visible {
+      display: block;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .results-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      border-bottom: 1px solid var(--slate-200);
+      padding-bottom: 1.15rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .results-title {
+      margin: 0 0 0.35rem;
+      font-size: 1.38rem;
+      font-weight: 800;
+      color: var(--navy-900);
+    }
+
+    .student-meta {
+      font-size: 0.95rem;
+      color: var(--slate-700);
+      line-height: 1.55;
+    }
+
+    .grade-badge-box {
+      background: var(--navy-50);
+      border: 1.5px solid var(--navy-100);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.25rem;
+      text-align: center;
+      min-width: 190px;
+    }
+
+    .grade-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--slate-600);
+      margin-bottom: 0.2rem;
+    }
+
+    .grade-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--navy-900);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.9rem;
+      margin-bottom: 1.35rem;
+    }
+
+    @media (max-width: 720px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-box {
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+    }
+
+    .stat-box.highlight {
+      background: var(--teal-50);
+      border-color: #99f6e4;
+    }
+
+    .stat-box-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--slate-600);
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-box-number {
+      font-size: 1.48rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-box.highlight .stat-box-number {
+      color: var(--teal-700);
+    }
+
+    .mini-bar {
+      width: 100%;
+      height: 7px;
+      background: rgba(15, 23, 42, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      background: var(--teal-600);
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    .results-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       КАРТИЦЕ ЗАДАТАКА И ПОНУЂЕНИ ОДГОВОРИ
+       ========================================================================== */
+    .question-card {
+      background: var(--white);
+      border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 1.45rem;
+      margin-bottom: 1.25rem;
+      scroll-margin-top: 6.2rem;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .question-card.card-correct {
+      border-color: var(--teal-500);
+      box-shadow: 0 4px 16px rgba(20, 184, 166, 0.12);
+    }
+
+    .question-card.card-wrong {
+      border-color: var(--rose-600);
+      box-shadow: 0 4px 16px rgba(225, 29, 72, 0.1);
+    }
+
+    .question-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .q-number-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--navy-900);
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+    }
+
+    .curriculum-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag-unit {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy-800);
+      background: var(--navy-100);
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .tag-outcome {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--teal-700);
+      background: var(--teal-100);
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .question-text {
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--slate-900);
+      margin: 0 0 1.1rem;
+      line-height: 1.65;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.82rem 1rem;
+      min-height: 54px;
+      border: 1.5px solid var(--slate-300);
+      border-radius: var(--radius-md);
+      background: var(--white);
+      cursor: pointer;
+      transition: all 0.16s ease;
+      user-select: none;
+    }
+
+    .option-label:hover:not(.disabled) {
+      border-color: var(--navy-700);
+      background: var(--navy-50);
+    }
+
+    .option-label.selected {
+      border-color: var(--navy-800);
+      background: var(--navy-100);
+      box-shadow: 0 0 0 1px var(--navy-800);
+    }
+
+    .option-letter {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--slate-100);
+      border: 1px solid var(--slate-300);
+      color: var(--slate-700);
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.16s ease;
+    }
+
+    .option-label.selected .option-letter {
+      background: var(--navy-800);
+      border-color: var(--navy-800);
+      color: var(--white);
+    }
+
+    .option-content {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--slate-900);
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .option-label.disabled {
+      cursor: default;
+    }
+
+    .option-label.opt-correct {
+      border-color: var(--teal-600);
+      background: var(--teal-50);
+      box-shadow: 0 0 0 1px var(--teal-600);
+    }
+
+    .option-label.opt-correct .option-letter {
+      background: var(--teal-600);
+      border-color: var(--teal-600);
+      color: var(--white);
+    }
+
+    .option-label.opt-wrong {
+      border-color: var(--rose-600);
+      background: var(--rose-50);
+      box-shadow: 0 0 0 1px var(--rose-600);
+    }
+
+    .option-label.opt-wrong .option-letter {
+      background: var(--rose-600);
+      border-color: var(--rose-600);
+      color: var(--white);
+    }
+
+    .status-pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .status-pill.correct {
+      background: var(--teal-100);
+      color: var(--teal-700);
+    }
+
+    .status-pill.wrong {
+      background: var(--rose-100);
+      color: var(--rose-700);
+    }
+
+    /* Оквир са поступком решавања */
+    .explanation-box {
+      display: none;
+      margin-top: 1.1rem;
+      padding: 1rem 1.15rem;
+      border-radius: var(--radius-md);
+      background: var(--slate-100);
+      border-left: 4px solid var(--navy-700);
+      font-size: 0.95rem;
+      color: var(--slate-900);
+      line-height: 1.65;
+    }
+
+    .explanation-box.visible {
+      display: block;
+    }
+
+    .explanation-box.correct-exp {
+      background: var(--teal-50);
+      border-left-color: var(--teal-600);
+    }
+
+    .explanation-box.wrong-exp {
+      background: #fff8f8;
+      border-left-color: var(--rose-600);
+    }
+
+    .explanation-header {
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--navy-900);
+    }
+
+    /* ==========================================================================
+       ДУГМАД И ПОТВРДА ПРЕДАЈЕ
+       ========================================================================== */
+    .submit-section {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .confirm-box {
+      display: none;
+      background: var(--amber-50);
+      border: 1.5px solid #fcd34d;
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+      margin-bottom: 1.1rem;
+      text-align: left;
+    }
+
+    .confirm-box.visible {
+      display: block;
+    }
+
+    .confirm-box p {
+      margin: 0 0 0.85rem;
+      font-weight: 600;
+      color: var(--amber-700);
+      font-size: 0.95rem;
+    }
+
+    .confirm-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.82rem 1.45rem;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.12s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--navy-800), var(--teal-700));
+      color: var(--white);
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.28);
+      font-size: 1.05rem;
+      padding: 0.95rem 2rem;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--navy-900), var(--teal-600));
+      box-shadow: 0 6px 18px rgba(13, 148, 136, 0.35);
+    }
+
+    .btn-navy {
+      background: var(--navy-800);
+      color: var(--white);
+    }
+
+    .btn-navy:hover {
+      background: var(--navy-900);
+    }
+
+    .btn-teal {
+      background: var(--teal-600);
+      color: var(--white);
+    }
+
+    .btn-teal:hover {
+      background: var(--teal-700);
+    }
+
+    .btn-outline {
+      background: var(--white);
+      color: var(--slate-700);
+      border: 1.5px solid var(--slate-300);
+    }
+
+    .btn-outline:hover {
+      background: var(--slate-100);
+      border-color: var(--slate-400);
+    }
+
+    /* Toast обавештење */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--navy-900);
+      color: var(--white);
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.92rem;
+      font-weight: 600;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      max-width: calc(100vw - 2rem);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--slate-500);
+      font-size: 0.86rem;
+      padding: 1.5rem 1rem 2.5rem;
+    }
+
+    /* ==========================================================================
+       СТИЛОВИ ЗА ШТАМПУ И ЧУВАЊЕ КАО PDF (@media print)
+       ========================================================================== */
+    @media print {
+      body {
+        background: #ffffff;
+        color: #000000;
+        font-size: 11pt;
+      }
+
+      .hero-header {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 0 0.75rem 0;
+        border-bottom: 2px solid #000000;
+      }
+
+      .hero-header::after,
+      .progress-bar-wrapper,
+      .submit-section,
+      .results-actions,
+      .toast,
+      .footer {
+        display: none !important;
+      }
+
+      .school-badge,
+      .deadline-pill {
+        background: #f1f5f9 !important;
+        color: #000000 !important;
+        border: 1px solid #94a3b8 !important;
+      }
+
+      .container {
+        margin: 0.75rem 0 0 0;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .card,
+      .results-card,
+      .question-card {
+        box-shadow: none !important;
+        border: 1px solid #94a3b8 !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 0.85rem;
+        padding: 0.9rem;
+      }
+
+      .options-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.45rem;
+      }
+
+      .option-label {
+        min-height: auto;
+        padding: 0.45rem 0.65rem;
+      }
+
+      .explanation-box.visible {
+        display: block !important;
+        background: #f8fafc !important;
+        border-left: 3px solid #0f172a !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ЗАГЛАВЉЕ ТЕСТА -->
+  <header class="hero-header">
+    <div class="hero-inner">
+      <div class="school-badge">Математика • 8. разред основне школе • Република Србија</div>
+      <h1 class="hero-title">Нови домаћи задатак: Линеарне једначине (8. разред)</h1>
+      <div class="deadline-pill">
+        📅 Припрема за писмени задатак — 30. новембар 2026.
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ПОДАЦИ О УЧЕНИКУ -->
+    <section class="card" id="studentInfoCard" aria-labelledby="studentHeading">
+      <h2 class="student-card-title" id="studentHeading">👤 Подаци о ученику</h2>
+      <p class="student-card-desc">
+        Упиши своје име и презиме (обавезно) и одељење (по жељи), па реши свих 12 задатака. Задаци су прилагођени за лакшу и сигурнију припрему писменог задатка.
+      </p>
+      <div class="student-grid">
+        <div class="form-group">
+          <label class="form-label" for="studentName">Име и презиме ученика <span class="req">*</span></label>
+          <input
+            type="text"
+            id="studentName"
+            class="form-input"
+            placeholder="нпр. Јована Николић"
+            autocomplete="name"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="studentClass">Одељење <span class="opt">(опционално)</span></label>
+          <input
+            type="text"
+            id="studentClass"
+            class="form-input"
+            placeholder="нпр. VIII-1"
+          />
+        </div>
+      </div>
+      <div id="studentValidationAlert" class="inline-alert" role="alert">
+        Молимо те да унесеш своје име и презиме пре предаје домаћег задатка.
+      </div>
+    </section>
+
+    <!-- КАРТИЦА СА РЕЗУЛТАТИМА (ПРИКАЗУЈЕ СЕ НАКОН ПРЕДАЈЕ) -->
+    <section class="results-card" id="resultsCard" aria-live="polite">
+      <div class="results-header">
+        <div>
+          <h2 class="results-title">📊 Резултати домаћег задатка</h2>
+          <div class="student-meta" id="reportStudentMeta"></div>
+        </div>
+        <div class="grade-badge-box">
+          <span class="grade-label">Оријентациона оцена</span>
+          <div class="grade-value" id="reportGrade">—</div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box highlight">
+          <div class="stat-box-title">Укупан резултат</div>
+          <div class="stat-box-number" id="reportTotalScore">0 / 12 (0%)</div>
+          <div class="mini-bar">
+            <div class="mini-bar-fill" id="barTotal" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-title">Исход 1: Реши линеарну једначину (1–8)</div>
+          <div class="stat-box-number" id="reportOutcome1">0 / 8 (0%)</div>
+          <div class="mini-bar">
+            <div class="mini-bar-fill" id="barOutcome1" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-title">Исход 2: Реши реалне проблеме (9–12)</div>
+          <div class="stat-box-number" id="reportOutcome2">0 / 4 (0%)</div>
+          <div class="mini-bar">
+            <div class="mini-bar-fill" id="barOutcome2" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-actions">
+        <button type="button" class="btn btn-navy" id="btnPrint">
+          🖨️ Одштампај / Сачувај као PDF
+        </button>
+        <button type="button" class="btn btn-teal" id="btnCopyReport">
+          📋 Копирај извештај за наставника
+        </button>
+        <button type="button" class="btn btn-outline" id="btnRetryTop">
+          🔄 Нови покушај
+        </button>
+      </div>
+    </section>
+
+    <!-- ЛЕПЉИВА ТРАКА НАПРЕТКА -->
+    <nav class="progress-bar-wrapper" aria-label="Напредак кроз задатке">
+      <div class="progress-top">
+        <span class="progress-text">Одговорено: <strong id="answeredCount">0</strong> / 12</span>
+        <span class="progress-percent" id="answeredPercent">0% завршено</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="question-dots" id="questionDots"></div>
+    </nav>
+
+    <!-- ЛИСТА ЗАДАТАКА -->
+    <div id="questionsContainer"></div>
+
+    <!-- СЕКЦИЈА ЗА ПРЕДАЈУ ДОМАЋЕГ -->
+    <section class="submit-section" id="submitSection">
+      <div class="confirm-box" id="unansweredConfirmBox" role="region" aria-live="polite">
+        <p id="unansweredConfirmText"></p>
+        <div class="confirm-actions">
+          <button type="button" class="btn btn-teal" id="btnConfirmSubmit">
+            Да, предај домаћи задатак
+          </button>
+          <button type="button" class="btn btn-outline" id="btnCancelSubmit">
+            Настави са решавањем
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="btnSubmitQuiz">
+        ✅ Предај домаћи задатак и провери решења
+      </button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Нови домаћи задатак из математике (8. разред) • Тема: Линеарне једначине • Припрема за писмени задатак 30. новембра 2026.
+  </footer>
+
+  <!-- TOAST ОБАВЕШТЕЊЕ -->
+  <div class="toast" id="toastNotification" role="status" aria-live="polite"></div>
+
+  <script>
+    /**
+     * База од 12 одмерених, блажих задатака из теме "Линеарне једначине" за 8. разред
+     * (обухвата НЈ 36–46 и оба исхода учења из програма у Србији).
+     */
+    const QUESTIONS_DATA = [
+      {
+        id: 1,
+        unit: "НЈ 36: Линеарне једначине са једном непознатом. Линеаран израз",
+        outcomeId: 1,
+        outcomeLabel: "Исход: Реши линеарну једначину",
+        questionHtml: "Који од наведених израза је линеаран израз по непознатој x?",
+        options: [
+          { textHtml: "4x − 7", isCorrect: true },
+          { textHtml: "x<sup>2</sup> + 3x − 1", isCorrect: false },
+          { textHtml: "<span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">x</span></span> + 2", isCorrect: false },
+          { textHtml: "2x<sup>3</sup> − 1", isCorrect: false }
+        ],
+        explanationHtml: "Линеаран израз по x има облик <strong>ax + b</strong>, где је непозната x на првом степену и није у имениоцу. Такав израз је <strong>4x − 7</strong> (са a = 4 и b = −7)."
+      },
+      {
+        id: 2,
+        unit: "НЈ 37: Еквивалентне једначине и правила за решавање једначина",
+        outcomeId: 1,
+        outcomeLabel: "Исход: Реши линеарну једначину",
+        questionHtml: "Која једначина се добија када се обе стране једначине 2x + 5 = 11 одузме број 5?",
+        options: [
+          { textHtml: "2x = 6", isCorrect: true },
+          { textHtml: "2x = 16", isCorrect: false },
+          { textHtml: "x + 5 = 11", isCorrect: false },
+          { textHtml: "2x + 10 = 11", isCorrect: false }
+        ],
+        explanationHtml: "Одузимањем броја 5 са обе стране једначине 2x + 5 = 11 добијамо еквивалентну једначину: 2x + 5 − 5 = 11 − 5, односно <strong>2x = 6</strong> (одакле је x = 3)."
+      },
+      {
+        id: 3,
+        unit: "НЈ 39: Решавање линеарних једначина са једном непознатом — обрада",
+        outcomeId: 1,
+        outcomeLabel: "Исход: Реши линеарну једначину",
+        questionHtml: "Реши једначину: 4x − 3 = 13.",
+        options: [
+          { textHtml: "x = 4", isCorrect: true },
+          { textHtml: "x = 2,5", isCorrect: false },
+          { textHtml: "x = 3", isCorrect: false },
+          { textHtml: "x = −4", isCorrect: false }
+        ],
+        explanationHtml: "Пребацимо −3 на десну страну уз промену знака: 4x = 13 + 3 ⇒ 4x = 16. Поделимо са 4: <strong>x = 4</strong>."
+      },
+      {
+        id: 4,
+        unit: "НЈ 40: Решавање линеарних једначина са једном непознатом — утврђивање",
+        outcomeId: 1,
+        outcomeLabel: "Исход: Реши линеарну једначину",
+        questionHtml: "Који је први корак при решавању једначине 3(x + 2) = 15 ако желимо да се прво ослободимо заграде?",
+        options: [
+          { textHtml: "3x + 6 = 15", isCorrect: true },
+          { textHtml: "3x + 2 = 15", isCorrect: false },
+          { textHtml: "3x + 5 = 15", isCorrect: false },
+          { textHtml: "3x − 6 = 15", isCorrect: false }
+        ],
+        explanationHtml: "По правилу множења збира бројем, сваки сабирак у загради множимо са 3: 3 · x + 3 · 2 = 15, што даје <strong>3x + 6 = 15</strong> (одакле даље следи 3x = 9 и x = 3)."
+      },
+      {
+        id: 5,
+        unit: "НЈ 40: Решавање линеарних једначина са једном непознатом — утврђивање",
+        outcomeId: 1,
+        outcomeLabel: "Исход: Реши линеарну једначину",
+        questionHtml: "Одреди решење једначине: 5x − 2(x − 1) = 11.",
+        options: [
+          { textHtml: "x = 3", isCorrect: true },
+          { textHtml: "x = 4", isCorrect: false },
+          { textHtml: "x = 2", isCorrect: false },
+          { textHtml: "x = −3", isCorrect: false }
+        ],
+        explanationHtml: "Ослобађамо се заграде пазећи на знак минус испред заграде: 5x − 2x + 2 = 11 ⇒ 3x + 2 = 11 ⇒ 3x = 9 ⇒ <strong>x = 3</strong>."
+      },
+      {
+        id: 6,
+        unit: "НЈ 41: Решавање сложенијих линеарних једначина са једном непознатом",
+        outcomeId: 1,
+        outcomeLabel: "Исход: Реши линеарну једначину",
+        questionHtml: "Реши једначину са разломком: <span class=\"frac\"><span class=\"num\">x + 1</span><span class=\"den\">2</span></span> = 4.",
+        options: [
+          { textHtml: "x = 7", isCorrect: true },
+          { textHtml: "x = 8", isCorrect: false },
+          { textHtml: "x = 3", isCorrect: false },
+          { textHtml: "x = 9", isCorrect: false }
+        ],
+        explanationHtml: "Помножимо обе стране једначине са 2: x + 1 = 4 · 2 ⇒ x + 1 = 8 ⇒ <strong>x = 7</strong>."
+      },
+      {
+        id: 7,
+        unit: "НЈ 45: Једначине које се своде на линеарне — обрада",
+        outcomeId: 1,
+        outcomeLabel: "Исход: Реши линеарну једначину",
+        questionHtml: "Користећи разлику квадрата (x − 3)(x + 3), реши једначину: (x − 3)(x + 3) = x<sup>2</sup> − 3x.",
+        options: [
+          { textHtml: "x = 3", isCorrect: true },
+          { textHtml: "x = −3", isCorrect: false },
+          { textHtml: "x = 9", isCorrect: false },
+          { textHtml: "x = 0", isCorrect: false }
+        ],
+        explanationHtml: "Леву страну записујемо као разлику квадрата: x<sup>2</sup> − 9 = x<sup>2</sup> − 3x. Одузимањем x<sup>2</sup> са обе стране добијамо −9 = −3x, одакле је <strong>x = 3</strong>."
+      },
+      {
+        id: 8,
+        unit: "НЈ 46: Једначине које се своде на линеарне — утврђивање",
+        outcomeId: 1,
+        outcomeLabel: "Исход: Реши линеарну једначину",
+        questionHtml: "Која су решења једначине (x − 2)(x + 5) = 0?",
+        options: [
+          { textHtml: "x<sub>1</sub> = 2 и x<sub>2</sub> = −5", isCorrect: true },
+          { textHtml: "x<sub>1</sub> = −2 и x<sub>2</sub> = 5", isCorrect: false },
+          { textHtml: "x<sub>1</sub> = 2 и x<sub>2</sub> = 5", isCorrect: false },
+          { textHtml: "Само x = 2", isCorrect: false }
+        ],
+        explanationHtml: "Производ је једнак нули када је бар један чинилац једнак нули: x − 2 = 0 ⇒ <strong>x<sub>1</sub> = 2</strong> или x + 5 = 0 ⇒ <strong>x<sub>2</sub> = −5</strong>."
+      },
+      {
+        id: 9,
+        unit: "НЈ 42: Примене линеарних једначина",
+        outcomeId: 2,
+        outcomeLabel: "Исход: Реши реалне проблеме користећи линеарну једначину",
+        questionHtml: "Збир два узастопна цела броја је 25. Који је мањи од та два броја?",
+        options: [
+          { textHtml: "12", isCorrect: true },
+          { textHtml: "13", isCorrect: false },
+          { textHtml: "11", isCorrect: false },
+          { textHtml: "14", isCorrect: false }
+        ],
+        explanationHtml: "Нека је мањи број x, а следећи узастопни x + 1. Једначина је: x + (x + 1) = 25 ⇒ 2x + 1 = 25 ⇒ 2x = 24 ⇒ <strong>x = 12</strong> (већи број је 13)."
+      },
+      {
+        id: 10,
+        unit: "НЈ 43: Примене линеарних једначина",
+        outcomeId: 2,
+        outcomeLabel: "Исход: Реши реалне проблеме користећи линеарну једначину",
+        questionHtml: "Обим правоугаоника је 28 cm. Ако је ширина правоугаоника 6 cm, колика је његова дужина?",
+        options: [
+          { textHtml: "8 cm", isCorrect: true },
+          { textHtml: "22 cm", isCorrect: false },
+          { textHtml: "7 cm", isCorrect: false },
+          { textHtml: "16 cm", isCorrect: false }
+        ],
+        explanationHtml: "Нека је дужина a cm. Обим је O = 2(a + b), па имамо: 2(a + 6) = 28 ⇒ a + 6 = 14 ⇒ <strong>a = 8 cm</strong>."
+      },
+      {
+        id: 11,
+        unit: "НЈ 44: Примене линеарних једначина",
+        outcomeId: 2,
+        outcomeLabel: "Исход: Реши реалне проблеме користећи линеарну једначину",
+        questionHtml: "Свеска кошта x динара, а оловка је за 40 динара јефтинија од свеске. Заједно свеска и оловка коштају 160 динара. Колико кошта свеска?",
+        options: [
+          { textHtml: "100 динара", isCorrect: true },
+          { textHtml: "60 динара", isCorrect: false },
+          { textHtml: "120 динара", isCorrect: false },
+          { textHtml: "80 динара", isCorrect: false }
+        ],
+        explanationHtml: "Оловка кошта (x − 40) динара. Постављамо једначину: x + (x − 40) = 160 ⇒ 2x − 40 = 160 ⇒ 2x = 200 ⇒ <strong>x = 100 динара</strong>."
+      },
+      {
+        id: 12,
+        unit: "НЈ 44: Примене линеарних једначина",
+        outcomeId: 2,
+        outcomeLabel: "Исход: Реши реалне проблеме користећи линеарну једначину",
+        questionHtml: "Брат има 14 година, а сестра има 8 година. За колико година ће брат имати тачно два пута више година него сестра?",
+        options: [
+          { textHtml: "За 2 године", isCorrect: true },
+          { textHtml: "За 4 године", isCorrect: false },
+          { textHtml: "За 6 година", isCorrect: false },
+          { textHtml: "За 3 године", isCorrect: false }
+        ],
+        explanationHtml: "За x година брат ће имати (14 + x) година, а сестра (8 + x) година. Једначина је: 14 + x = 2(8 + x) ⇒ 14 + x = 16 + 2x ⇒ x = −2? Пажљиво: проверимо! 14 + x = 16 + 2x ⇒ −x = 2 ⇒ x = −2. А шта ако питамо за колико година ће имати 1,5 пута више? Проверимо: за 2 године брат има 16, а сестра 10. Хајде да поправимо тачан избор на <strong>За 0 година (већ је старији)</strong> или још боље: поставимо узраст брата на 12 година, а сестре на 6 година — тада је за x година: 12 + x = 2(6 + x)? Не, ако брат има 10 година, а сестра 2 године, за x година: 10 + x = 2(2 + x) ⇒ 10 + x = 4 + 2x ⇒ <strong>x = 6 година</strong>! Хајде да у тексту задатка ставимо да брат има 10 година, а сестра 2 године, тако да решење буде позитиван цео број (6 година)."
+      }
+    ];
+
+    // Исправимо текст и објашњење 12. задатка да буде математички потпуно тачан и јасан за ученика
+    QUESTIONS_DATA[11].questionHtml =
+      "Брат има 10 година, а сестра има 2 године. За колико година ће брат бити два пута старији од сестре?";
+    QUESTIONS_DATA[11].options = [
+      { textHtml: "За 6 година", isCorrect: true },
+      { textHtml: "За 8 година", isCorrect: false },
+      { textHtml: "За 4 године", isCorrect: false },
+      { textHtml: "За 2 године", isCorrect: false }
+    ];
+    QUESTIONS_DATA[11].explanationHtml =
+      "Нека је x број година који треба да прође. Тада ће брат имати (10 + x) година, а сестра (2 + x) година. Једначина гласи: 10 + x = 2(2 + x) ⇒ 10 + x = 4 + 2x ⇒ 10 − 4 = 2x − x ⇒ <strong>x = 6 година</strong> (тада брат има 16, а сестра 8 година).";
+
+    const CYRILLIC_LETTERS = ["А", "Б", "В", "Г"];
+
+    let quizState = {
+      questions: [],
+      userAnswers: {},
+      isSubmitted: false,
+      lastReportText: ""
+    };
+
+    /**
+     * Fisher-Yates мешање низа
+     */
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    /**
+     * Претварање HTML математичких израза у читљив текст за извештај
+     */
+    function stripHtmlToPlainText(html) {
+      const temp = document.createElement("div");
+      const formatted = html
+        .replace(/<span class="frac"><span class="num">(.*?)<\/span><span class="den">(.*?)<\/span><\/span>/g, "($1)/($2)")
+        .replace(/<sup>(.*?)<\/sup>/g, "^$1")
+        .replace(/<sub>(.*?)<\/sub>/g, "_$1");
+      temp.innerHTML = formatted;
+      return (temp.textContent || temp.innerText || "").trim();
+    }
+
+    /**
+     * Иницијализација питања са насумично измешаним одговорима
+     */
+    function initQuizData() {
+      quizState.questions = QUESTIONS_DATA.map((q) => {
+        const shuffledOptions = shuffleArray(q.options).map((opt, idx) => ({
+          ...opt,
+          letter: CYRILLIC_LETTERS[idx]
+        }));
+        return {
+          ...q,
+          shuffledOptions
+        };
+      });
+      quizState.userAnswers = {};
+      quizState.isSubmitted = false;
+      quizState.lastReportText = "";
+    }
+
+    /**
+     * Искључивање навигационих дугмића (1–12)
+     */
+    function renderProgressDots() {
+      const dotsContainer = document.getElementById("questionDots");
+      dotsContainer.innerHTML = "";
+
+      quizState.questions.forEach((q) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "q-dot";
+        btn.id = `dot-${q.id}`;
+        btn.textContent = q.id;
+        btn.title = `Скочи на задатак ${q.id}`;
+        btn.addEventListener("click", () => {
+          const target = document.getElementById(`question-card-${q.id}`);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+        dotsContainer.appendChild(btn);
+      });
+    }
+
+    /**
+     * Ажурирање индикатора напретка
+     */
+    function updateProgressUI() {
+      const answeredCount = Object.keys(quizState.userAnswers).length;
+      const total = quizState.questions.length;
+      const percent = Math.round((answeredCount / total) * 100);
+
+      document.getElementById("answeredCount").textContent = answeredCount;
+      document.getElementById("answeredPercent").textContent = `${percent}% завршено`;
+      document.getElementById("progressFill").style.width = `${percent}%`;
+
+      quizState.questions.forEach((q) => {
+        const dot = document.getElementById(`dot-${q.id}`);
+        if (!dot) return;
+
+        if (!quizState.isSubmitted) {
+          dot.classList.toggle("answered", quizState.userAnswers[q.id] !== undefined);
+        } else {
+          const chosenIdx = quizState.userAnswers[q.id];
+          const isCorrect = chosenIdx !== undefined && q.shuffledOptions[chosenIdx].isCorrect;
+          dot.classList.remove("answered");
+          dot.classList.add(isCorrect ? "graded-correct" : "graded-wrong");
+        }
+      });
+    }
+
+    /**
+     * Приказ свих 12 задатака
+     */
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      container.innerHTML = "";
+
+      quizState.questions.forEach((q) => {
+        const card = document.createElement("article");
+        card.className = "question-card";
+        card.id = `question-card-${q.id}`;
+
+        const optionsHtml = q.shuffledOptions
+          .map((opt, idx) => {
+            const inputId = `q-${q.id}-opt-${idx}`;
+            return `
+              <label class="option-label" for="${inputId}" id="label-${q.id}-${idx}">
+                <input
+                  type="radio"
+                  class="sr-only"
+                  name="question-${q.id}"
+                  id="${inputId}"
+                  value="${idx}"
+                />
+                <span class="option-letter">${opt.letter}</span>
+                <span class="option-content">${opt.textHtml}</span>
+                <span class="status-pill" id="pill-${q.id}-${idx}" style="display:none;"></span>
+              </label>
+            `;
+          })
+          .join("");
+
+        card.innerHTML = `
+          <div class="question-meta">
+            <span class="q-number-badge">Задатак ${q.id} од 12</span>
+            <div class="curriculum-tags">
+              <span class="tag-unit">${q.unit}</span>
+              <span class="tag-outcome">${q.outcomeLabel}</span>
+            </div>
+          </div>
+          <p class="question-text">${q.questionHtml}</p>
+          <div class="options-grid" role="radiogroup" aria-label="Понуђени одговори за задатак ${q.id}">
+            ${optionsHtml}
+          </div>
+          <div class="explanation-box" id="explanation-${q.id}">
+            <div class="explanation-header" id="exp-header-${q.id}"></div>
+            <div><strong>Поступак решавања:</strong> ${q.explanationHtml}</div>
+          </div>
+        `;
+
+        container.appendChild(card);
+
+        q.shuffledOptions.forEach((_, idx) => {
+          const radio = document.getElementById(`q-${q.id}-opt-${idx}`);
+          radio.addEventListener("change", () => {
+            if (quizState.isSubmitted) return;
+            handleOptionSelect(q.id, idx);
+          });
+        });
+      });
+    }
+
+    /**
+     * Избор одговора за задатак
+     */
+    function handleOptionSelect(questionId, optionIndex) {
+      quizState.userAnswers[questionId] = optionIndex;
+
+      for (let i = 0; i < 4; i++) {
+        const lbl = document.getElementById(`label-${questionId}-${i}`);
+        if (lbl) {
+          lbl.classList.toggle("selected", i === optionIndex);
+        }
+      }
+
+      document.getElementById("unansweredConfirmBox").classList.remove("visible");
+      updateProgressUI();
+    }
+
+    /**
+     * Оријентациона оцена (1–5)
+     */
+    function calculateGrade(percentage) {
+      if (percentage >= 88) return "Одличан (5)";
+      if (percentage >= 75) return "Врло добар (4)";
+      if (percentage >= 62) return "Добар (3)";
+      if (percentage >= 50) return "Довољан (2)";
+      return "Недовољан (1)";
+    }
+
+    /**
+     * Провера обавезног поља за име и презиме и потврда предаје
+     */
+    function attemptSubmitQuiz() {
+      if (quizState.isSubmitted) return;
+
+      const nameInput = document.getElementById("studentName");
+      const alertBox = document.getElementById("studentValidationAlert");
+      const studentName = nameInput.value.trim();
+
+      nameInput.classList.remove("input-error");
+
+      if (!studentName) {
+        nameInput.classList.add("input-error");
+        alertBox.classList.add("visible");
+        document.getElementById("studentInfoCard").scrollIntoView({ behavior: "smooth", block: "center" });
+        nameInput.focus();
+        return;
+      }
+
+      alertBox.classList.remove("visible");
+
+      const studentClass = document.getElementById("studentClass").value.trim();
+      try {
+        localStorage.setItem("novi_domaci_lin_ime", studentName);
+        localStorage.setItem("novi_domaci_lin_odeljenje", studentClass);
+      } catch (e) {
+        // Игнориши ако localStorage није доступан
+      }
+
+      const answeredCount = Object.keys(quizState.userAnswers).length;
+      const totalCount = quizState.questions.length;
+
+      if (answeredCount < totalCount) {
+        const remaining = totalCount - answeredCount;
+        const confirmBox = document.getElementById("unansweredConfirmBox");
+        const confirmText = document.getElementById("unansweredConfirmText");
+        confirmText.textContent = `Одговорено је ${answeredCount} од ${totalCount} задатака (остало је још ${remaining}). Неодговорени задаци се рачунају као нетачни. Желиш ли да предаш домаћи задатак?`;
+        confirmBox.classList.add("visible");
+        confirmBox.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      gradeAndShowResults();
+    }
+
+    /**
+     * Оцењивање, приказ поступка и састављање извештаја
+     */
+    function gradeAndShowResults() {
+      quizState.isSubmitted = true;
+      document.getElementById("unansweredConfirmBox").classList.remove("visible");
+
+      const studentName = document.getElementById("studentName").value.trim();
+      const studentClass = document.getElementById("studentClass").value.trim() || "Није наведено";
+
+      document.getElementById("studentName").disabled = true;
+      document.getElementById("studentClass").disabled = true;
+
+      let totalCorrect = 0;
+      let outcome1Correct = 0; // Задаци 1–8 (8 задатака)
+      let outcome2Correct = 0; // Задаци 9–12 (4 задатка)
+
+      const detailedLines = [];
+
+      quizState.questions.forEach((q) => {
+        const chosenIdx = quizState.userAnswers[q.id];
+        const correctIdx = q.shuffledOptions.findIndex((o) => o.isCorrect);
+        const isCorrect = chosenIdx !== undefined && chosenIdx === correctIdx;
+
+        if (isCorrect) {
+          totalCorrect++;
+          if (q.outcomeId === 1) outcome1Correct++;
+          if (q.outcomeId === 2) outcome2Correct++;
+        }
+
+        const card = document.getElementById(`question-card-${q.id}`);
+        card.classList.add(isCorrect ? "card-correct" : "card-wrong");
+
+        q.shuffledOptions.forEach((opt, idx) => {
+          const radio = document.getElementById(`q-${q.id}-opt-${idx}`);
+          const lbl = document.getElementById(`label-${q.id}-${idx}`);
+          const pill = document.getElementById(`pill-${q.id}-${idx}`);
+
+          radio.disabled = true;
+          lbl.classList.add("disabled");
+          lbl.classList.remove("selected");
+
+          if (idx === correctIdx) {
+            lbl.classList.add("opt-correct");
+            pill.style.display = "inline-block";
+            pill.className = "status-pill correct";
+            pill.textContent = "✓ Тачан одговор";
+          } else if (idx === chosenIdx && !isCorrect) {
+            lbl.classList.add("opt-wrong");
+            pill.style.display = "inline-block";
+            pill.className = "status-pill wrong";
+            pill.textContent = "✗ Твој избор";
+          }
+        });
+
+        const expBox = document.getElementById(`explanation-${q.id}`);
+        const expHeader = document.getElementById(`exp-header-${q.id}`);
+        expBox.classList.add("visible", isCorrect ? "correct-exp" : "wrong-exp");
+
+        if (isCorrect) {
+          expHeader.innerHTML = "✅ Тачно решено!";
+        } else if (chosenIdx === undefined) {
+          expHeader.innerHTML = "⚠️ Није одговорено (рачуна се као нетачно)";
+        } else {
+          expHeader.innerHTML = "❌ Нетачан одговор";
+        }
+
+        const chosenText =
+          chosenIdx !== undefined
+            ? `${q.shuffledOptions[chosenIdx].letter}) ${stripHtmlToPlainText(q.shuffledOptions[chosenIdx].textHtml)}`
+            : "Није одговорено";
+        const correctText = `${q.shuffledOptions[correctIdx].letter}) ${stripHtmlToPlainText(q.shuffledOptions[correctIdx].textHtml)}`;
+
+        detailedLines.push(
+          `Задатак ${q.id}: ${isCorrect ? "ТАЧНО" : "НЕТАЧНО"} | Одговор ученика: ${chosenText} | Тачно: ${correctText}`
+        );
+      });
+
+      const totalPercent = Math.round((totalCorrect / 12) * 100);
+      const out1Percent = Math.round((outcome1Correct / 8) * 100);
+      const out2Percent = Math.round((outcome2Correct / 4) * 100);
+      const gradeText = calculateGrade(totalPercent);
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString("sr-RS", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      });
+      const timeStr = now.toLocaleTimeString("sr-RS", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+      const timestamp = `${dateStr} у ${timeStr}`;
+
+      document.getElementById("reportStudentMeta").innerHTML = `
+        <strong>Ученик:</strong> ${escapeHtml(studentName)} &nbsp;|&nbsp;
+        <strong>Одељење:</strong> ${escapeHtml(studentClass)}<br />
+        <strong>Време израде:</strong> ${timestamp}
+      `;
+      document.getElementById("reportGrade").textContent = gradeText;
+      document.getElementById("reportTotalScore").textContent = `${totalCorrect} / 12 (${totalPercent}%)`;
+      document.getElementById("reportOutcome1").textContent = `${outcome1Correct} / 8 (${out1Percent}%)`;
+      document.getElementById("reportOutcome2").textContent = `${outcome2Correct} / 4 (${out2Percent}%)`;
+
+      document.getElementById("barTotal").style.width = `${totalPercent}%`;
+      document.getElementById("barOutcome1").style.width = `${out1Percent}%`;
+      document.getElementById("barOutcome2").style.width = `${out2Percent}%`;
+
+      quizState.lastReportText = [
+        "====================================================",
+        "ИЗВЕШТАЈ — НОВИ ДОМАЋИ ЗАДАТАК (МАТЕМАТИКА, 8. РАЗРЕД)",
+        "Тема: Линеарне једначине (Припрема за писмени 30.11.2026.)",
+        "====================================================",
+        `Ученик: ${studentName}`,
+        `Одељење: ${studentClass}`,
+        `Време израде: ${timestamp}`,
+        `Укупан резултат: ${totalCorrect} / 12 (${totalPercent}%)`,
+        `Оријентациона оцена: ${gradeText}`,
+        "----------------------------------------------------",
+        "Преглед по исходима учења:",
+        `- Исход 1 (Реши линеарну једначину, 1–8): ${outcome1Correct} / 8 (${out1Percent}%)`,
+        `- Исход 2 (Реши реалне проблеме, 9–12): ${outcome2Correct} / 4 (${out2Percent}%)`,
+        "----------------------------------------------------",
+        "Детаљан преглед по задацима:",
+        ...detailedLines,
+        "===================================================="
+      ].join("\n");
+
+      updateProgressUI();
+      document.getElementById("submitSection").style.display = "none";
+      const resultsCard = document.getElementById("resultsCard");
+      resultsCard.classList.add("visible");
+      resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function copyReportToClipboard() {
+      if (!quizState.lastReportText) return;
+
+      const textArea = document.createElement("textarea");
+      textArea.value = quizState.lastReportText;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      textArea.style.top = "0";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch (err) {
+        copied = false;
+      }
+      document.body.removeChild(textArea);
+
+      if (copied) {
+        showToast("✅ Извештај за наставника је копиран у привремену меморију!");
+      } else {
+        showToast("⚠️ Копирање није успело. Користи дугме за штампу / PDF.");
+      }
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById("toastNotification");
+      toast.textContent = message;
+      toast.classList.add("show");
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3600);
+    }
+
+    function resetAndRestartQuiz() {
+      initQuizData();
+      document.getElementById("resultsCard").classList.remove("visible");
+      document.getElementById("submitSection").style.display = "block";
+      document.getElementById("unansweredConfirmBox").classList.remove("visible");
+
+      document.getElementById("studentName").disabled = false;
+      document.getElementById("studentClass").disabled = false;
+
+      renderProgressDots();
+      renderQuestions();
+      updateProgressUI();
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      showToast("🔄 Нови покушај је спреман са измешаним одговорима.");
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      try {
+        const savedName = localStorage.getItem("novi_domaci_lin_ime");
+        const savedClass = localStorage.getItem("novi_domaci_lin_odeljenje");
+        if (savedName) document.getElementById("studentName").value = savedName;
+        if (savedClass) document.getElementById("studentClass").value = savedClass;
+      } catch (e) {
+        // Игнориши
+      }
+
+      document.getElementById("studentName").addEventListener("input", (e) => {
+        if (e.target.value.trim()) {
+          e.target.classList.remove("input-error");
+        }
+      });
+
+      initQuizData();
+      renderProgressDots();
+      renderQuestions();
+      updateProgressUI();
+
+      document.getElementById("btnSubmitQuiz").addEventListener("click", attemptSubmitQuiz);
+      document.getElementById("btnConfirmSubmit").addEventListener("click", gradeAndShowResults);
+      document.getElementById("btnCancelSubmit").addEventListener("click", () => {
+        document.getElementById("unansweredConfirmBox").classList.remove("visible");
+      });
+      document.getElementById("btnPrint").addEventListener("click", () => window.print());
+      document.getElementById("btnCopyReport").addEventListener("click", copyReportToClipboard);
+      document.getElementById("btnRetryTop").addEventListener("click", resetAndRestartQuiz);
+    });
+  </script>
+</body>
+</html>
