@@ -68,9 +68,11 @@
 
 | [Фотографије][841]
 | [Квиз1][842]
+| [Квиз2][843]
 |
 
 [841]: https://photos.app.goo.gl/R1USQ58sq8zWzGaVA "Фотографије табле"
 [842]: https://ndjapic.github.io/school/2026-nastava/mat8/pismeni2/kviz1/index.html "Први квиз из градива за други писмени задатак"
+[843]: https://ndjapic.github.io/school/2026-nastava/mat8/pismeni2/kviz2/index.html "Други квиз из градива за други писмени задатак"
 
 
