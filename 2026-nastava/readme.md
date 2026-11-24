@@ -34,10 +34,12 @@
 
 | [Фотографије][651]
 | [Квиз1][652]
+| [Квиз1][653]
 |
 
 [651]: https://photos.app.goo.gl/Q3Xj49ieMA7bHr676 "Фотографије табле"
 [652]: https://ndjapic.github.io/school/2026-nastava/mat6/pismeni2/kviz1/index.html "Први квиз из градива за други писмени задатак"
+[653]: https://ndjapic.github.io/school/2026-nastava/mat6/pismeni2/kviz2/index.html "Други квиз из градива за други писмени задатак"
 
 ## Математика 8
 
